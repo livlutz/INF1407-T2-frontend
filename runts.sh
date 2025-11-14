@@ -1,6 +1,6 @@
 #!/bin/bash
 
 cd web
-cd Typescript
 tsc --init
+cd TypeScript
 tsc -w
