@@ -1,3 +1,4 @@
+import { backendAddress } from './constantes.js';
 
 /**
  * Interface representing a Recipe object
@@ -5,14 +6,15 @@
 interface Receita {
     id: number;
     titulo: string;
-    descricao: string;
     ingredientes: string;
-    modo_preparo: string;
-    tempo_preparo: number;
+    modo_de_preparo: string;
+    tempo_de_preparo: number;
     porcoes: number;
+    categoria: string;
+    foto_da_receita: string;
     visibilidade: 'pub' | 'priv';
-    autor?: string;
-    data_criacao?: string;
+    autor: number;
+    autor_nome: string;
 }
 
 /**
@@ -120,20 +122,35 @@ function createReceitaCard(receita: Receita): HTMLElement {
     const card = document.createElement('div');
     card.className = 'receita-card';
 
+    // Add image if available
+    if (receita.foto_da_receita) {
+        const img = document.createElement('img');
+        img.src = `${backendAddress.replace(/\/$/, '')}${receita.foto_da_receita}`;
+        img.alt = receita.titulo;
+        img.className = 'receita-img';
+        card.appendChild(img);
+    }
+
     const titulo = document.createElement('h2');
     titulo.textContent = receita.titulo;
     card.appendChild(titulo);
 
-    if (receita.descricao) {
-        const descricao = document.createElement('p');
-        descricao.textContent = receita.descricao;
-        card.appendChild(descricao);
-    }
+    // Show author name
+    const autor = document.createElement('p');
+    autor.className = 'receita-autor';
+    autor.textContent = `Por: ${receita.autor_nome}`;
+    card.appendChild(autor);
+
+    // Show category
+    const categoria = document.createElement('span');
+    categoria.className = 'receita-categoria';
+    categoria.textContent = receita.categoria;
+    card.appendChild(categoria);
 
     const detalhes = document.createElement('div');
     detalhes.className = 'receita-detalhes';
     detalhes.innerHTML = `
-        <span>⏱️ ${receita.tempo_preparo} min</span>
+        <span>⏱️ ${receita.tempo_de_preparo} min</span>
         <span>🍽️ ${receita.porcoes} porções</span>
     `;
     card.appendChild(detalhes);

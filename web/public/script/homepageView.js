@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,11 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetchPublicReceitas = fetchPublicReceitas;
-exports.renderPubReceitasListView = renderPubReceitasListView;
-exports.renderReceitas = renderReceitas;
-exports.createReceitaCard = createReceitaCard;
+import { backendAddress } from './constantes.js';
 /**
  * Fetches public recipes from the backend API
  * Calls the PubReceitasListView endpoint which returns public recipes ordered by -id
@@ -98,18 +93,31 @@ function renderReceitas(contexto) {
 function createReceitaCard(receita) {
     const card = document.createElement('div');
     card.className = 'receita-card';
+    // Add image if available
+    if (receita.foto_da_receita) {
+        const img = document.createElement('img');
+        img.src = `${backendAddress.replace(/\/$/, '')}${receita.foto_da_receita}`;
+        img.alt = receita.titulo;
+        img.className = 'receita-img';
+        card.appendChild(img);
+    }
     const titulo = document.createElement('h2');
     titulo.textContent = receita.titulo;
     card.appendChild(titulo);
-    if (receita.descricao) {
-        const descricao = document.createElement('p');
-        descricao.textContent = receita.descricao;
-        card.appendChild(descricao);
-    }
+    // Show author name
+    const autor = document.createElement('p');
+    autor.className = 'receita-autor';
+    autor.textContent = `Por: ${receita.autor_nome}`;
+    card.appendChild(autor);
+    // Show category
+    const categoria = document.createElement('span');
+    categoria.className = 'receita-categoria';
+    categoria.textContent = receita.categoria;
+    card.appendChild(categoria);
     const detalhes = document.createElement('div');
     detalhes.className = 'receita-detalhes';
     detalhes.innerHTML = `
-        <span>⏱️ ${receita.tempo_preparo} min</span>
+        <span>⏱️ ${receita.tempo_de_preparo} min</span>
         <span>🍽️ ${receita.porcoes} porções</span>
     `;
     card.appendChild(detalhes);
@@ -119,3 +127,5 @@ function createReceitaCard(receita) {
     });
     return card;
 }
+// Export functions
+export { fetchPublicReceitas, renderPubReceitasListView, renderReceitas, createReceitaCard };
