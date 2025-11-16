@@ -97,6 +97,25 @@
   font-size: 0.95rem;
 }
 
+.modern-btn {
+  background: #ff9800;
+  color: #181818;
+  border: none;
+  border-radius: 999px;
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.modern-btn:hover {
+  background: #e68900;
+  color: #fff;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+}
+
 /* Responsive adjustments for homepage */
 @media (max-width: 768px) {
   .receitas-list {

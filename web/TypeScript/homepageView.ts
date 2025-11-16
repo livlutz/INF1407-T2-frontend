@@ -69,6 +69,8 @@ async function renderPubReceitasListView(): Promise<void> {
     // Atualiza o título da página
     document.title = contexto.tituloJanela;
 
+    
+
     // Renderiza as receitas no DOM
     renderReceitas(contexto);
 }
@@ -88,6 +90,32 @@ function renderReceitas(contexto: PageContext): void {
 
     // Limpa o conteúdo existente
     container.innerHTML = '';
+
+    // Header section
+    const header = document.createElement('div');
+    header.className = 'login-e-cadastro';
+
+    //botao para fazer cadastro
+    const cadastroBtn = document.createElement('button');
+    cadastroBtn.className = 'modern-btn';
+    cadastroBtn.textContent = 'Cadastro';
+    cadastroBtn.style.marginTop = '2rem';
+    cadastroBtn.addEventListener('click', () => {
+        window.location.href = 'cadastro.html';
+    });
+    header.appendChild(cadastroBtn);
+
+    //botao de login
+    const loginBtn = document.createElement('button');
+    loginBtn.className = 'modern-btn';
+    loginBtn.textContent = 'Login';
+    loginBtn.style.marginTop = '2rem';
+    loginBtn.addEventListener('click', () => {
+        window.location.href = 'login.html';
+    });
+    header.appendChild(loginBtn);
+
+    container.appendChild(header);
 
     // Adiciona o título da página
     const pageTitle = document.createElement('h1');
