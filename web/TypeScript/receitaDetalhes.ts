@@ -180,7 +180,7 @@ function renderReceitaDetalhes(receita: Receita): void {
  * Displays an error message
  */
 function showError(message: string): void {
-    const container = document.getElementById('receita-detalhes-container');
+    const container = document.getElementById('ver-receita-section');
     if (!container) return;
 
     container.innerHTML = `
