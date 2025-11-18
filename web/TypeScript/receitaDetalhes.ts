@@ -56,6 +56,8 @@ function renderReceitaDetalhes(receita: Receita): void {
         return;
     }
 
+    container.className = 'ver-receita-section';
+
     // Clear existing content
     container.innerHTML = '';
 
@@ -91,36 +93,44 @@ function renderReceitaDetalhes(receita: Receita): void {
     const meta = document.createElement('div');
     meta.className = 'ver-receita-meta';
 
-    const categoria = document.createElement('span');
-    categoria.className = 'ver-receita-cat';
-    categoria.textContent = receita.categoria;
-    meta.appendChild(categoria);
-
-    const tempo = document.createElement('span');
-    tempo.className = 'ver-receita-time';
-    tempo.textContent = `⏱️ ${receita.tempo_de_preparo} min`;
-    meta.appendChild(tempo);
-
-    const porcoes = document.createElement('span');
-    porcoes.className = 'ver-receita-porc';
-    porcoes.textContent = `🍽️ ${receita.porcoes} porções`;
-    meta.appendChild(porcoes);
-
     const autor = document.createElement('span');
     autor.className = 'ver-receita-author';
     autor.textContent = `👨‍🍳 ${receita.autor_nome}`;
     meta.appendChild(autor);
 
+    const itens = document.createElement('div');
+    itens.className = 'ver-receita-info';
+
+    const categoria = document.createElement('span');
+    categoria.className = 'receita-info-item';
+    categoria.textContent = receita.categoria;
+    itens.appendChild(categoria);
+
+    const tempo = document.createElement('span');
+    tempo.className = 'receita-info-item';
+    tempo.textContent = `⏱️ ${receita.tempo_de_preparo} min`;
+    itens.appendChild(tempo);
+
+    const porcoes = document.createElement('span');
+    porcoes.className = 'receita-info-item';
+    porcoes.textContent = `🍽️ ${receita.porcoes} porções`;
+    itens.appendChild(porcoes);
+
+    meta.appendChild(itens);
     content.appendChild(meta);
 
+    // TODO: ações de editar/excluir para o autor da receita
+
     // Ingredientes section
+    const infos = document.createElement('div');
+    infos.className = 'ver-receita-section';
     const ingredientesTitle = document.createElement('h2');
-    ingredientesTitle.className = 'ver-receita-section';
+    ingredientesTitle.className = 'ver-receita-title';
     ingredientesTitle.textContent = 'Ingredientes';
-    content.appendChild(ingredientesTitle);
+    infos.appendChild(ingredientesTitle);
 
     const ingredientesList = document.createElement('ul');
-    ingredientesList.className = 'ver-receita-list';
+    ingredientesList.className = 'receita-ingredientes-list';
 
     // Split ingredients by newlines and create list items
     const ingredientesArray = receita.ingredientes.split(/\r?\n/).filter(line => line.trim());
@@ -130,19 +140,24 @@ function renderReceitaDetalhes(receita: Receita): void {
         ingredientesList.appendChild(li);
     });
 
-    content.appendChild(ingredientesList);
+    infos.appendChild(ingredientesList);
+    content.appendChild(infos);
 
     // Modo de preparo section
+
+    const infos2 = document.createElement('div');
+    infos2.className = 'ver-receita-section';
     const preparoTitle = document.createElement('h2');
-    preparoTitle.className = 'ver-receita-section';
+    preparoTitle.className = 'ver-receita-title';
     preparoTitle.textContent = 'Modo de Preparo';
-    content.appendChild(preparoTitle);
+    infos2.appendChild(preparoTitle);
 
     const preparo = document.createElement('div');
-    preparo.className = 'ver-receita-prep';
+    preparo.className = 'receita-instrucoes';
     // Preserve line breaks in the preparation text
     preparo.innerHTML = receita.modo_de_preparo.replace(/\r?\n/g, '<br>');
-    content.appendChild(preparo);
+    infos2.appendChild(preparo);
+    content.appendChild(infos2);
 
     // Back button
     const backBtn = document.createElement('button');
