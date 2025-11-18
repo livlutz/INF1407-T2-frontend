@@ -1,4 +1,3 @@
-import { backendAddress } from './constantes.js';
 
 /**
  * Interface com o objeto receita
@@ -69,7 +68,7 @@ async function renderPubReceitasListView(): Promise<void> {
     // Atualiza o título da página
     document.title = contexto.tituloJanela;
 
-    
+
 
     // Renderiza as receitas no DOM
     renderReceitas(contexto);

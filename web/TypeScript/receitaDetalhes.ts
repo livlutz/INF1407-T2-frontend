@@ -1,4 +1,3 @@
-import { backendAddress } from './constantes.js';
 
 /**
  * Interface representing a Recipe object
