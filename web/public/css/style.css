@@ -226,12 +226,22 @@
     grid-template-columns: 1fr;
     padding: 0.5rem;
   }
-  
+
   #receitas-container {
     padding: 1rem;
   }
-  
+
   #receitas-container h1 {
     font-size: 1.8rem;
   }
+}
+
+.invisivel {
+display: none;
+}
+.visivel {
+display: inline;
+}
+.mesmaLinha {
+display: inline;
 }
