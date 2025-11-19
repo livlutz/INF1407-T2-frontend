@@ -249,3 +249,142 @@
 .mesmaLinha {
     display: inline;
 }
+
+/* Profile Page Styles */
+#perfil-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #232323;
+    border-radius: 1rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+#perfil-container h1 {
+    color: #ff9800;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.perfil-info {
+    background: #181818;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.perfil-field {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #333;
+}
+
+.perfil-field:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.perfil-field label {
+    display: block;
+    color: #ff9800;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.perfil-field .value {
+    color: #fff;
+    font-size: 1.1rem;
+}
+
+.loading {
+    text-align: center;
+    color: #fff;
+    padding: 2rem;
+    font-size: 1.2rem;
+}
+
+.error {
+    background: #ff4444;
+    color: #fff;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.skeleton {
+    background: linear-gradient(90deg, #2a2a2a 25%, #333 50%, #2a2a2a 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s ease-in-out infinite;
+    height: 1.5rem;
+    border-radius: 0.25rem;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.perfil-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #333;
+}
+
+.perfil-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.perfil-btn-edit {
+    background: #ff9800;
+    color: #181818;
+}
+
+.perfil-btn-edit:hover {
+    background: #e68900;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.4);
+}
+
+.perfil-btn-password {
+    background: #4CAF50;
+    color: #fff;
+}
+
+.perfil-btn-password:hover {
+    background: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+}
+
+.perfil-btn-delete {
+    background: #f44336;
+    color: #fff;
+}
+
+.perfil-btn-delete:hover {
+    background: #da190b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+}
+
+.perfil-btn-ver-receitas {
+    background: #2196F3;
+    color: #fff;
+}
