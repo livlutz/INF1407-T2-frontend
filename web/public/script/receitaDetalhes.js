@@ -22,7 +22,7 @@ function getRecipeIdFromUrl() {
 function fetchReceita(id) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const response = yield fetch(`${backendAddress}receita/${id}/`);
+            const response = yield fetch(`${backendAddress}receitas/receita/${id}/`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

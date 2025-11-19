@@ -3,7 +3,12 @@ onload = () => {
         evento.preventDefault();
         const username: String = (document.getElementById('username') as HTMLInputElement).value;
         const password: String = (document.getElementById('password') as HTMLInputElement).value;
-        const msg =(document.getElementById('msg') as HTMLDivElement);
+        const msg = (document.getElementById('msg') as HTMLDivElement);
+
+        // Clear previous error message
+        msg.innerHTML = '';
+        msg.style.display = 'none';
+
         fetch(backendAddress + 'accounts/token-auth/', {
             method: 'POST',
             body: JSON.stringify({
@@ -18,10 +23,11 @@ onload = () => {
             if (response.ok) {
                 return response.json();
             }
-
             else {
                 if (response.status == 401) {
                     msg.innerHTML = 'Usuário ou senha inválidos.';
+                    msg.style.display = 'block';
+                    msg.style.color = 'red';
                 }
                 throw new Error('Falha na autenticação');
             }
@@ -33,6 +39,12 @@ onload = () => {
         })
         .catch(erro => {
             console.log(erro);
+            // Show generic error if not already shown
+            if (msg.innerHTML === '') {
+                msg.innerHTML = 'Erro ao tentar fazer login. Tente novamente.';
+                msg.style.display = 'block';
+                msg.style.color = 'red';
+            }
         });
-});
+    });
 };

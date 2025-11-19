@@ -16,7 +16,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 function fetchPublicReceitas() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const response = yield fetch(backendAddress);
+            const response = yield fetch(backendAddress + "receitas/");
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

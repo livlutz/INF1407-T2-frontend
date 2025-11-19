@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
+    <title>Logout</title>
     <script src="script/accounts/logout.js"></script>
     <script src="script/constantes.js"></script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <iframe src="cabecalho.html" frameborder="0" width="100%"></iframe>
-    <p>
-        Confirme logout clicando
-        <button type="button" id="logout">aqui</button>.
-    </p>
+    <h2>Confirmar Logout</h2>
+    <p>Tem certeza que deseja sair?</p>
+    <button type="button" id="logout">Sim</button>
+    <button type="button" id="btnCancel" onclick="window.location.href='index.html'">Não</button>
     <div id="mensagem"></div>
 </body>
 </html>

@@ -236,12 +236,16 @@
   }
 }
 
-.invisivel {
-display: none;
-}
 .visivel {
-display: inline;
+    display: inline;
+    visibility: visible;
 }
+
+.invisivel {
+    display: none;
+    visibility: hidden;
+}
+
 .mesmaLinha {
-display: inline;
+    display: inline;
 }

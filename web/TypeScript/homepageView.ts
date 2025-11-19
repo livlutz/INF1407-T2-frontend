@@ -33,7 +33,7 @@ interface PageContext {
  */
 async function fetchPublicReceitas(): Promise<Receita[]> {
     try {
-        const response = await fetch(backendAddress);
+        const response = await fetch(backendAddress + "receitas/");
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);

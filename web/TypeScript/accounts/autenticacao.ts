@@ -1,40 +1,130 @@
 window.addEventListener('load', () => {
+    // Check if we're in an iframe and use parent's localStorage
+    const storage = window.parent !== window ? window.parent.localStorage : localStorage;
+
     // Verifica o username e coloca no cabeçalho da página
-    const token = localStorage.getItem('token'); // Recupera o token de autenticação
-    fetch(backendAddress + 'accounts/token-auth/', {
-    method: 'GET',
-    headers: {
-        'Authorization': tokenKeyword + token // Reenvia o token no cabeçalho HTTP
+    const token = storage.getItem('token'); // Recupera o token de autenticação
+
+    // Only run if we're in the header (cabecalho.html)
+    const identificacaoElement = document.getElementById('identificacao');
+    if (!identificacaoElement) {
+        return; // Not in cabecalho.html, skip authentication check
     }
-}).then(response => {
-    response.json().then(data => {
-        const usuario = data;
+
+    // If no token exists, set as visitante immediately
+    if (!token) {
+        const loggedElement = document.getElementById('logged');
+        const unloggedElement = document.getElementById('unlogged');
+
+        if (identificacaoElement) {
+            identificacaoElement.innerHTML = 'visitante';
+        }
+        if (loggedElement && unloggedElement) {
+            unloggedElement.classList.remove('invisivel');
+            unloggedElement.classList.add('visivel');
+            loggedElement.classList.remove('visivel');
+            loggedElement.classList.add('invisivel');
+        }
+        return;
+    }
+
+    fetch(backendAddress + 'accounts/token-auth/', {
+        method: 'GET',
+        headers: {
+            'Authorization': tokenKeyword + token
+        }
+    }).then(response => {
+        const loggedElement = document.getElementById('logged');
+        const unloggedElement = document.getElementById('unlogged');
+
+        if (!loggedElement || !unloggedElement) {
+            return;
+        }
 
         if(response.ok) {
-            // token enviado no cabeçalho foi aceito pelo servidor
-            let objDiv = (document.getElementById('logged') as HTMLDivElement);
-            objDiv.classList.remove('invisivel');
-            objDiv.classList.add('visivel');
-            objDiv = (document.getElementById('unlogged') as HTMLDivElement);
-            objDiv.classList.remove('visivel');
-            objDiv.classList.add('invisivel');
-        }
+            response.json().then(data => {
+                const usuario = data;
+                // token enviado no cabeçalho foi aceito pelo servidor
+                loggedElement.classList.remove('invisivel');
+                loggedElement.classList.add('visivel');
+                unloggedElement.classList.remove('visivel');
+                unloggedElement.classList.add('invisivel');
 
-        else {
-            // token enviado no cabeçalho foi rejeitado pelo servidor
-            usuario.username = 'visitante'
-            let objDiv = (document.getElementById('unlogged') as HTMLDivElement);
-            objDiv.classList.remove('invisivel');
-            objDiv.classList.add('visivel');
-            objDiv = (document.getElementById('logged') as HTMLDivElement);
-            objDiv.classList.remove('visivel');
-            objDiv.classList.add('invisivel');
+                if (identificacaoElement) {
+                    identificacaoElement.innerHTML = usuario.username;
+                }
+            });
+        } else {
+            // Token invalid/expired - clear it and show as visitante
+            storage.removeItem('token');
+            if (identificacaoElement) {
+                identificacaoElement.innerHTML = 'visitante';
+            }
+            unloggedElement.classList.remove('invisivel');
+            unloggedElement.classList.add('visivel');
+            loggedElement.classList.remove('visivel');
+            loggedElement.classList.add('invisivel');
         }
-        const spanElement = document.getElementById('identificacao') as HTMLSpanElement;
-        spanElement.innerHTML = usuario.username;
-    })
     }).catch(erro => {
-        console.log('[setLoggedUser] deu erro: ' + erro);
+        // Network error - show as visitante
+        if (identificacaoElement) {
+            identificacaoElement.innerHTML = 'visitante';
+        }
     });
 });
 
+/**
+ * Updates the header to show logged-in user information
+ */
+export function updateHeaderAuthentication(): void {
+    const username = localStorage.getItem('username');
+    const authToken = localStorage.getItem('authToken');
+
+    const identificacaoElement = document.getElementById('identificacao');
+    const loggedElement = document.getElementById('logged');
+    const unloggedElement = document.getElementById('unlogged');
+
+    if (!identificacaoElement || !loggedElement || !unloggedElement) {
+        return; // Elements don't exist on this page
+    }
+
+    if (username && authToken) {
+        // User is logged in
+        identificacaoElement.textContent = username;
+        loggedElement.classList.remove('invisivel');
+        loggedElement.classList.add('visivel');
+        unloggedElement.classList.remove('visivel');
+        unloggedElement.classList.add('invisivel');
+    } else {
+        // User is not logged in (visitante)
+        identificacaoElement.textContent = 'visitante';
+        loggedElement.classList.remove('visivel');
+        loggedElement.classList.add('invisivel');
+        unloggedElement.classList.remove('invisivel');
+        unloggedElement.classList.add('visivel');
+    }
+}
+
+/**
+ * Check if user is authenticated
+ */
+export function isAuthenticated(): boolean {
+    const token = localStorage.getItem('authToken');
+    return token !== null;
+}
+
+/**
+ * Get current logged-in username
+ */
+export function getCurrentUsername(): string | null {
+    return localStorage.getItem('username');
+}
+
+/**
+ * Logout user by clearing authentication data
+ */
+export function logout(): void {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('username');
+    window.location.href = 'login.html';
+}

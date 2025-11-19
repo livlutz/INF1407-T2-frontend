@@ -30,7 +30,7 @@ function getRecipeIdFromUrl(): number | null {
  */
 async function fetchReceita(id: number): Promise<Receita | null> {
     try {
-        const response = await fetch(`${backendAddress}receita/${id}/`);
+        const response = await fetch(`${backendAddress}receitas/receita/${id}/`);
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
