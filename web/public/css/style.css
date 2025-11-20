@@ -328,6 +328,143 @@
     100% { background-position: -200% 0; }
 }
 
+/* Delete User Page Styles */
+.delete-container {
+    max-width: 600px;
+    margin: 4rem auto;
+    padding: 2rem;
+    background: #232323;
+    border-radius: 1rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    border: 2px solid #f44336;
+}
+
+.delete-container h1 {
+    color: #f44336;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.warning-icon {
+    text-align: center;
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.warning-message {
+    background: #ff4444;
+    color: #fff;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.warning-message h2 {
+    margin: 0 0 1rem 0;
+    font-size: 1.3rem;
+}
+
+.warning-message p {
+    margin: 0.5rem 0;
+}
+
+.delete-info {
+    background: #181818;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+    color: #fff;
+}
+
+.delete-info ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.delete-info li {
+    margin: 0.5rem 0;
+    line-height: 1.6;
+}
+
+.delete-info h3 {
+    color: #ff9800;
+    margin-top: 0;
+}
+
+.delete-info .warning-text {
+    margin-top: 1.5rem;
+    color: #ff9800;
+    font-weight: bold;
+}
+
+.delete-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-delete {
+    background: #f44336;
+    color: #fff;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-delete:hover:not(:disabled) {
+    background: #da190b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+}
+
+.btn-delete:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-cancel {
+    background: #666;
+    color: #fff;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-cancel:hover:not(:disabled) {
+    background: #555;
+    transform: translateY(-2px);
+}
+
+.btn-cancel:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+#message {
+    display: none;
+    margin-bottom: 1.5rem;
+}
+
+.success {
+    background: #4CAF50;
+    color: #fff;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
 .perfil-actions {
     display: flex;
     gap: 1rem;

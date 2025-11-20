@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excluir Conta</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="script/constantes.js"></script>
+    <script src="script/accounts/deleteView.js"></script>
+</head>
+<body>
+    <iframe src="cabecalho.html" frameborder="0" width="100%" scrolling="no"></iframe>
+
+    <div class="delete-container">
+        <div class="warning-icon">⚠️</div>
+        <h1>Excluir Conta</h1>
+
+        <div id="message"></div>
+
+        <div class="warning-message">
+            <h2>ATENÇÃO: Esta ação é irreversível!</h2>
+            <p>Você está prestes a excluir permanentemente sua conta.</p>
+            <p><strong>Todos os seus dados serão perdidos.</strong></p>
+        </div>
+
+        <div class="delete-info">
+            <h3>O que será excluído:</h3>
+            <ul>
+                <li>Seu perfil de usuário</li>
+                <li>Todas as suas receitas</li>
+                <li>Seus comentários e avaliações</li>
+                <li>Todo o histórico de atividades</li>
+            </ul>
+            <p class="warning-text">
+                Tem certeza de que deseja continuar?
+            </p>
+        </div>
+
+        <div class="delete-actions">
+            <button id="btnCancel" class="btn-cancel">
+                Cancelar
+            </button>
+            <button id="btnDelete" class="btn-delete">
+                Sim, Excluir Minha Conta
+            </button>
+        </div>
+    </div>
+</body>
+</html>
