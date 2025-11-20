@@ -33,6 +33,29 @@
   transition: transform 0.3s, box-shadow 0.3s;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+.visibility-badge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.visibility-public {
+  background: rgba(76, 175, 80, 0.95);
+  color: #fff;
+}
+
+.visibility-private {
+  background: rgba(158, 158, 158, 0.95);
+  color: #fff;
 }
 
 .receita-card:hover {
@@ -644,4 +667,126 @@
 .btn-submit:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+}
+
+/* Minhas Receitas Styles */
+.minhas-receitas-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.minhas-receitas-header h1 {
+    font-size: 2.5rem;
+    color: #ff9800;
+    margin-bottom: 0.5rem;
+}
+
+.receitas-count {
+    font-size: 1.1rem;
+    color: #ccc;
+    margin-bottom: 1.5rem;
+}
+
+.btn-criar-receita {
+    background: #ff9800;
+    color: #181818;
+    padding: 0.9rem 2rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 2rem;
+}
+
+.btn-criar-receita:hover {
+    background: #e68900;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.4);
+}
+
+.no-recipes {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #232323;
+    border-radius: 1rem;
+    margin: 2rem auto;
+    max-width: 600px;
+}
+
+.no-recipes h2 {
+    color: #ff9800;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.no-recipes p {
+    color: #ccc;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+.receita-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    padding: 1rem;
+    border-top: 1px solid rgba(255, 152, 0, 0.2);
+}
+
+.btn-editar {
+    background: #4CAF50;
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-editar:hover {
+    background: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+}
+
+.btn-deletar {
+    background: #f44336;
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-deletar:hover {
+    background: #da190b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+}
+
+.error-message {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: #232323;
+    border-radius: 1rem;
+    margin: 2rem auto;
+    max-width: 600px;
+}
+
+.error-message h2 {
+    color: #f44336;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.error-message p {
+    color: #ccc;
+    font-size: 1.1rem;
 }

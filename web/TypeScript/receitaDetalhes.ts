@@ -30,7 +30,20 @@ function getRecipeIdFromUrl(): number | null {
  */
 async function fetchReceita(id: number): Promise<Receita | null> {
     try {
-        const response = await fetch(`${backendAddress}receitas/receita/${id}/`);
+        const token = localStorage.getItem('token');
+        const headers: HeadersInit = {
+            'Content-Type': 'application/json'
+        };
+
+        // Add authorization header if token exists
+        if (token) {
+            headers['Authorization'] = tokenKeyword + token;
+        }
+
+        const response = await fetch(`${backendAddress}receitas/receita/${id}/`, {
+            method: 'GET',
+            headers: headers
+        });
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -158,15 +171,37 @@ function renderReceitaDetalhes(receita: Receita): void {
     infos2.appendChild(preparo);
     content.appendChild(infos2);
 
-    // Back button
+    // Action buttons
+    const token = localStorage.getItem('token');
+    const buttonsDiv = document.createElement('div');
+    buttonsDiv.style.display = 'flex';
+    buttonsDiv.style.gap = '1rem';
+    buttonsDiv.style.marginTop = '2rem';
+    buttonsDiv.style.flexWrap = 'wrap';
+
+    // Back to Homepage button
     const backBtn = document.createElement('button');
     backBtn.className = 'modern-btn';
     backBtn.textContent = '← Voltar para Homepage';
-    backBtn.style.marginTop = '2rem';
     backBtn.addEventListener('click', () => {
         window.location.href = 'index.html';
     });
-    content.appendChild(backBtn);
+    buttonsDiv.appendChild(backBtn);
+
+    // Back to My Recipes button (only show if user is logged in)
+    if (token) {
+        const myRecipesBtn = document.createElement('button');
+        myRecipesBtn.className = 'modern-btn';
+        myRecipesBtn.style.background = '#ff9800';
+        myRecipesBtn.style.color = '#181818';
+        myRecipesBtn.textContent = '📖 Minhas Receitas';
+        myRecipesBtn.addEventListener('click', () => {
+            window.location.href = 'minhasReceitas.html';
+        });
+        buttonsDiv.appendChild(myRecipesBtn);
+    }
+
+    content.appendChild(buttonsDiv);
 
     card.appendChild(content);
     container.appendChild(card);
