@@ -525,3 +525,123 @@
     background: #2196F3;
     color: #fff;
 }
+
+/* Password Change Styles */
+.password-change-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    background: #232323;
+    padding: 2.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.password-change-container h1 {
+    color: #ff9800;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.password-change-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.password-change-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.password-change-form label {
+    color: #ff9800;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.password-change-form input[type="password"] {
+    background: #181818;
+    border: 2px solid #333;
+    color: #fff;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.password-change-form input[type="password"]:focus {
+    outline: none;
+    border-color: #ff9800;
+    box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1);
+}
+
+.password-change-form .form-hint {
+    color: #999;
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
+.password-tips {
+    background: #181818;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    border-left: 4px solid #ff9800;
+}
+
+.password-tips h3 {
+    color: #ff9800;
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.password-tips ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.password-tips li {
+    color: #ccc;
+    padding: 0.25rem 0;
+    font-size: 0.9rem;
+}
+
+.password-tips li:before {
+    content: "✓ ";
+    color: #ff9800;
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.btn-submit {
+    background: #ff9800;
+    color: #181818;
+    padding: 0.9rem 2rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-submit:hover:not(:disabled) {
+    background: #e68900;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.4);
+}
+
+.btn-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

@@ -110,28 +110,24 @@ function displayProfile(profile: UserProfile): void {
     content.innerHTML = `
         <div class="perfil-info">
             <div class="perfil-field">
-                <label>ID</label>
-                <div class="value">${profile.id || 'N/A'}</div>
-            </div>
-            <div class="perfil-field">
                 <label>Nome de Usuário</label>
-                <div class="value">${profile.username || 'N/A'}</div>
+                <div class="value">${profile.username || '-'}</div>
             </div>
             <div class="perfil-field">
                 <label>Nome</label>
-                <div class="value">${profile.first_name || 'N/A'}</div>
+                <div class="value">${profile.first_name || '-'}</div>
             </div>
             <div class="perfil-field">
                 <label>Sobrenome</label>
-                <div class="value">${profile.last_name || 'N/A'}</div>
+                <div class="value">${profile.last_name || '-'}</div>
             </div>
             <div class="perfil-field">
                 <label>Email</label>
-                <div class="value">${profile.email || 'N/A'}</div>
+                <div class="value">${profile.email || '-'}</div>
             </div>
             <div class="perfil-field">
                 <label>Data de Cadastro</label>
-                <div class="value">${profile.date_joined ? new Date(profile.date_joined).toLocaleDateString('pt-BR') : 'N/A'}</div>
+                <div class="value">${profile.date_joined ? new Date(profile.date_joined).toLocaleDateString('pt-BR') : '-'}</div>
             </div>
         </div>
     `;
