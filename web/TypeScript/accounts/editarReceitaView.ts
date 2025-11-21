@@ -104,9 +104,10 @@ function populateForm(receita: ReceitaData): void {
         if (currentImageDiv) {
             currentImageDiv.innerHTML = `
                 <p>Imagem atual:</p>
-                <img src="${backendAddress.replace(/\/$/, '')}${receita.foto_da_receita}"
+                <img src="${receita.foto_da_receita}"
                      alt="Foto atual"
-                     style="max-width: 200px; border-radius: 0.5rem; margin-top: 0.5rem;">
+                     style="max-width: 200px; border-radius: 0.5rem; margin-top: 0.5rem;"
+                     onerror="this.style.display='none'; this.previousElementSibling.textContent='Imagem não disponível';">
             `;
             currentImageDiv.style.display = 'block';
         }

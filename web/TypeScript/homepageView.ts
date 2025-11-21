@@ -94,25 +94,29 @@ function renderReceitas(contexto: PageContext): void {
     const header = document.createElement('div');
     header.className = 'login-e-cadastro';
 
-    //botao para fazer cadastro
-    const cadastroBtn = document.createElement('button');
-    cadastroBtn.className = 'modern-btn';
-    cadastroBtn.textContent = 'Cadastro';
-    cadastroBtn.style.marginTop = '2rem';
-    cadastroBtn.addEventListener('click', () => {
-        window.location.href = 'cadastro.html';
-    });
-    header.appendChild(cadastroBtn);
+    // Only show login/cadastro buttons if user is not logged in
+    const token = localStorage.getItem('token');
+    if (!token) {
+        //botao para fazer cadastro
+        const cadastroBtn = document.createElement('button');
+        cadastroBtn.className = 'modern-btn';
+        cadastroBtn.textContent = 'Cadastro';
+        cadastroBtn.style.marginTop = '2rem';
+        cadastroBtn.addEventListener('click', () => {
+            window.location.href = 'cadastro.html';
+        });
+        header.appendChild(cadastroBtn);
 
-    //botao de login
-    const loginBtn = document.createElement('button');
-    loginBtn.className = 'modern-btn';
-    loginBtn.textContent = 'Login';
-    loginBtn.style.marginTop = '2rem';
-    loginBtn.addEventListener('click', () => {
-        window.location.href = 'login.html';
-    });
-    header.appendChild(loginBtn);
+        //botao de login
+        const loginBtn = document.createElement('button');
+        loginBtn.className = 'modern-btn';
+        loginBtn.textContent = 'Login';
+        loginBtn.style.marginTop = '2rem';
+        loginBtn.addEventListener('click', () => {
+            window.location.href = 'login.html';
+        });
+        header.appendChild(loginBtn);
+    }
 
     container.appendChild(header);
 
@@ -154,7 +158,8 @@ function createReceitaCard(receita: Receita): HTMLElement {
     // Always add image - use placeholder if not available
     const img = document.createElement('img');
     if (receita.foto_da_receita) {
-        img.src = `${backendAddress.replace(/\/$/, '')}${receita.foto_da_receita}`;
+        // The serializer already returns the full URL with the request context
+        img.src = receita.foto_da_receita;
     } else {
         img.src = 'https://via.placeholder.com/400x300?text=Sem+Imagem';
     }

@@ -106,10 +106,24 @@ function displayUserRecipes(receitas: any[]): void {
         const visibilityBadge = isPublic ? '🌐 Pública' : '🔒 Privada';
         const visibilityClass = isPublic ? 'visibility-public' : 'visibility-private';
 
+        // Handle image URL - check if it's absolute or relative
+        let imageUrl = 'https://via.placeholder.com/400x300?text=Sem+Imagem';
+        if (receita.foto_da_receita) {
+            if (receita.foto_da_receita.startsWith('http://') || receita.foto_da_receita.startsWith('https://')) {
+                // Already absolute URL
+                imageUrl = receita.foto_da_receita;
+            } else {
+                // Relative URL - prepend backend address
+                const cleanBackend = backendAddress.replace(/\/$/, '');
+                const cleanPath = receita.foto_da_receita.startsWith('/') ? receita.foto_da_receita : '/' + receita.foto_da_receita;
+                imageUrl = cleanBackend + cleanPath;
+            }
+        }
+
         html += `
             <div class="receita-card" onclick="window.location.href='receita.html?id=${receita.id}'">
                 <span class="visibility-badge ${visibilityClass}">${visibilityBadge}</span>
-                <img src="${receita.foto_da_receita || 'https://via.placeholder.com/400x300?text=Sem+Imagem'}"
+                <img src="${imageUrl}"
                      alt="${receita.titulo}"
                      class="receita-img"
                      onerror="this.src='https://via.placeholder.com/400x300?text=Sem+Imagem'">

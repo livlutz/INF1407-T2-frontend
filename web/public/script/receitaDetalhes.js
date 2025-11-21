@@ -63,14 +63,26 @@ function renderReceitaDetalhes(receita) {
     card.className = 'ver-receita-card';
     // Add image if available
     if (receita.foto_da_receita) {
+        console.log('Image URL from backend:', receita.foto_da_receita);
         const imgWrap = document.createElement('div');
         imgWrap.className = 'ver-receita-img-wrap';
         const img = document.createElement('img');
-        img.src = `${backendAddress.replace(/\/$/, '')}${receita.foto_da_receita}`;
+        // Backend now returns the full URL
+        img.src = receita.foto_da_receita;
         img.alt = receita.titulo;
         img.className = 'ver-receita-img';
+        img.onerror = function () {
+            console.error('Failed to load image:', receita.foto_da_receita);
+            this.src = 'https://via.placeholder.com/400x300?text=Sem+Imagem';
+        };
+        img.onload = function () {
+            console.log('Image loaded successfully:', receita.foto_da_receita);
+        };
         imgWrap.appendChild(img);
         card.appendChild(imgWrap);
+    }
+    else {
+        console.log('No image URL provided for this recipe');
     }
     // Content section
     const content = document.createElement('div');
