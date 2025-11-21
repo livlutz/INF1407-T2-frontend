@@ -8,6 +8,7 @@ interface UserProfile {
     last_name: string;
     email: string;
     date_joined: string;
+    foto_de_perfil?: string;
 }
 
 /**
@@ -107,7 +108,27 @@ function displayProfile(profile: UserProfile): void {
     const content = document.getElementById('perfil-content');
     if (!content) return;
 
+    // Handle profile picture URL
+    let profilePictureUrl = 'https://via.placeholder.com/150?text=Sem+Foto';
+    if (profile.foto_de_perfil) {
+        if (profile.foto_de_perfil.startsWith('http://') || profile.foto_de_perfil.startsWith('https://')) {
+            profilePictureUrl = profile.foto_de_perfil;
+        } else {
+            const cleanBackend = backendAddress.replace(/\/$/, '');
+            const cleanPath = profile.foto_de_perfil.startsWith('/') ? profile.foto_de_perfil : '/' + profile.foto_de_perfil;
+            profilePictureUrl = cleanBackend + cleanPath;
+        }
+    }
+
     content.innerHTML = `
+        <div class="perfil-header">
+            <div class="perfil-picture-container">
+                <img src="${profilePictureUrl}"
+                     alt="Foto de perfil de ${profile.username}"
+                     class="perfil-picture"
+                     onerror="this.src='https://via.placeholder.com/150?text=Sem+Foto'">
+            </div>
+        </div>
         <div class="perfil-info">
             <div class="perfil-field">
                 <label>Nome de Usuário</label>

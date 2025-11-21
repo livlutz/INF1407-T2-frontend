@@ -18,6 +18,7 @@ interface UserProfile {
     last_name: string;
     email: string;
     date_joined: string;
+    foto_de_perfil?: string;
 }
 
 /**
@@ -79,6 +80,27 @@ async function loadCurrentUserData(): Promise<void> {
         (document.getElementById('edit-last-name') as HTMLInputElement).value = profile.last_name || '';
         (document.getElementById('edit-email') as HTMLInputElement).value = profile.email || '';
 
+        // Show current profile picture if exists
+        if (profile.foto_de_perfil) {
+            const currentImageDiv = document.getElementById('current-profile-picture');
+            if (currentImageDiv) {
+                let imageUrl = profile.foto_de_perfil;
+                if (!(imageUrl.startsWith('http://') || imageUrl.startsWith('https://'))) {
+                    const cleanBackend = backendAddress.replace(/\/$/, '');
+                    const cleanPath = imageUrl.startsWith('/') ? imageUrl : '/' + imageUrl;
+                    imageUrl = cleanBackend + cleanPath;
+                }
+                currentImageDiv.innerHTML = `
+                    <p>Foto atual:</p>
+                    <img src="${imageUrl}"
+                         alt="Foto de perfil atual"
+                         class="current-profile-pic-preview"
+                         onerror="this.style.display='none'; this.previousElementSibling.textContent='Foto não disponível';">
+                `;
+                currentImageDiv.style.display = 'block';
+            }
+        }
+
     } catch (error) {
         console.error('Erro ao carregar dados:', error);
         const messageDiv = document.getElementById('message');
@@ -111,6 +133,7 @@ async function updateUserProfile(): Promise<void> {
     const firstName = (document.getElementById('edit-first-name') as HTMLInputElement).value.trim();
     const lastName = (document.getElementById('edit-last-name') as HTMLInputElement).value.trim();
     const email = (document.getElementById('edit-email') as HTMLInputElement).value.trim();
+    const fotoInput = document.getElementById('foto_de_perfil') as HTMLInputElement;
 
     // Validate required fields
     if (!username || !email) {
@@ -139,20 +162,25 @@ async function updateUserProfile(): Promise<void> {
             throw new Error('ID do usuário não encontrado');
         }
 
-        const updateData: UserUpdateData = {
-            username: username,
-            first_name: firstName,
-            last_name: lastName,
-            email: email
-        };
+        // Use FormData to support file upload
+        const formData = new FormData();
+        formData.append('username', username);
+        formData.append('first_name', firstName);
+        formData.append('last_name', lastName);
+        formData.append('email', email);
+
+        // Add profile picture if selected
+        if (fotoInput.files && fotoInput.files.length > 0) {
+            formData.append('foto_de_perfil', fotoInput.files[0]);
+        }
 
         const response = await fetch(backendAddress + `usuarios/perfil/atualizar/${userId}/`, {
             method: 'PUT',
             headers: {
-                'Authorization': tokenKeyword + token,
-                'Content-Type': 'application/json'
+                'Authorization': tokenKeyword + token
+                // Don't set Content-Type - let browser set it with boundary for multipart/form-data
             },
-            body: JSON.stringify(updateData)
+            body: formData
         });
 
         if (!response.ok) {
