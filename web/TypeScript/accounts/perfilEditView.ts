@@ -199,9 +199,9 @@ async function updateUserProfile(): Promise<void> {
 }
 
 /**
- * Cancel edit and go back
+ * Cancel edit and go back to profile
  */
-function cancelEdit(): void {
+function cancelProfileEdit(): void {
     window.location.href = 'perfil.html';
 }
 
@@ -233,7 +233,7 @@ function initializeEditProfilePage(): void {
     if (cancelBtn) {
         cancelBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            cancelEdit();
+            cancelProfileEdit();
         });
     }
 }

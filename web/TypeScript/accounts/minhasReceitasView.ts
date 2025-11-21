@@ -143,43 +143,10 @@ function editarReceita(id: number): void {
 }
 
 /**
- * Delete recipe
+ * Delete recipe - redirect to confirmation page
  */
-async function deletarReceita(id: number): Promise<void> {
-    if (!confirm('Tem certeza que deseja excluir esta receita? Esta ação não pode ser desfeita.')) {
-        return;
-    }
-
-    const token = localStorage.getItem('token');
-    if (!token) {
-        window.location.href = 'login.html';
-        return;
-    }
-
-    try {
-        const response = await fetch(backendAddress + `receitas/${id}/`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': tokenKeyword + token
-            }
-        });
-
-        if (!response.ok) {
-            if (response.status === 401) {
-                localStorage.removeItem('token');
-                window.location.href = 'login.html';
-                return;
-            }
-            throw new Error('Erro ao excluir receita');
-        }
-
-        // Reload recipes after deletion
-        loadUserRecipes();
-
-    } catch (error) {
-        console.error('Erro ao excluir receita:', error);
-        alert('Erro ao excluir receita. Tente novamente.');
-    }
+function deletarReceita(id: number): void {
+    window.location.href = `deletarReceita.html?id=${id}`;
 }
 
 /**

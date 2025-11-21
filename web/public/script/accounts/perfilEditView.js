@@ -163,9 +163,9 @@ function updateUserProfile() {
     });
 }
 /**
- * Cancel edit and go back
+ * Cancel edit and go back to profile
  */
-function cancelEdit() {
+function cancelProfileEdit() {
     window.location.href = 'perfil.html';
 }
 /**
@@ -191,7 +191,7 @@ function initializeEditProfilePage() {
     if (cancelBtn) {
         cancelBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            cancelEdit();
+            cancelProfileEdit();
         });
     }
 }

@@ -140,41 +140,10 @@ function editarReceita(id) {
     window.location.href = `editarReceita.html?id=${id}`;
 }
 /**
- * Delete recipe
+ * Delete recipe - redirect to confirmation page
  */
 function deletarReceita(id) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (!confirm('Tem certeza que deseja excluir esta receita? Esta ação não pode ser desfeita.')) {
-            return;
-        }
-        const token = localStorage.getItem('token');
-        if (!token) {
-            window.location.href = 'login.html';
-            return;
-        }
-        try {
-            const response = yield fetch(backendAddress + `receitas/${id}/`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': tokenKeyword + token
-                }
-            });
-            if (!response.ok) {
-                if (response.status === 401) {
-                    localStorage.removeItem('token');
-                    window.location.href = 'login.html';
-                    return;
-                }
-                throw new Error('Erro ao excluir receita');
-            }
-            // Reload recipes after deletion
-            loadUserRecipes();
-        }
-        catch (error) {
-            console.error('Erro ao excluir receita:', error);
-            alert('Erro ao excluir receita. Tente novamente.');
-        }
-    });
+    window.location.href = `deletarReceita.html?id=${id}`;
 }
 /**
  * Initialize page

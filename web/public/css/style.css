@@ -790,3 +790,171 @@
     color: #ccc;
     font-size: 1.1rem;
 }
+
+/* Edit Recipe Styles */
+.edit-recipe-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    background: #232323;
+    padding: 2.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.edit-recipe-container h1 {
+    color: #ff9800;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.edit-recipe-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.edit-recipe-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.edit-recipe-form .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.edit-recipe-form label {
+    color: #ff9800;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.edit-recipe-form input[type="text"],
+.edit-recipe-form input[type="number"],
+.edit-recipe-form textarea,
+.edit-recipe-form select {
+    background: #181818;
+    border: 2px solid #333;
+    color: #fff;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+.edit-recipe-form input[type="text"]:focus,
+.edit-recipe-form input[type="number"]:focus,
+.edit-recipe-form textarea:focus,
+.edit-recipe-form select:focus {
+    outline: none;
+    border-color: #ff9800;
+    box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1);
+}
+
+.edit-recipe-form input[type="file"] {
+    background: #181818;
+    border: 2px dashed #333;
+    color: #fff;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.edit-recipe-form input[type="file"]:hover {
+    border-color: #ff9800;
+}
+
+.edit-recipe-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+@media (max-width: 768px) {
+    .edit-recipe-form .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .edit-recipe-container {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+}
+
+/* Delete Recipe Confirmation Styles */
+.delete-recipe-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    background: #232323;
+    padding: 2.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.delete-recipe-container h1 {
+    color: #f44336;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.delete-warning {
+    background: rgba(244, 67, 54, 0.1);
+    border: 2px solid #f44336;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.warning-icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.delete-warning h2 {
+    color: #f44336;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.delete-warning p {
+    color: #ccc;
+    font-size: 1rem;
+}
+
+.recipe-info-box {
+    background: #181818;
+    border: 2px solid #333;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.recipe-details h3 {
+    color: #ff9800;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.recipe-details p {
+    color: #ccc;
+    margin: 0.5rem 0;
+    font-size: 1rem;
+}
+
+.recipe-details strong {
+    color: #ff9800;
+}
+
+.confirmation-question {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 2rem;
+}

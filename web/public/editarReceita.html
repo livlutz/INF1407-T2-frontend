@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Receita</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="script/constantes.js"></script>
+    <script src="script/accounts/editarReceitaView.js"></script>
+</head>
+<body>
+    <iframe src="cabecalho.html" frameborder="0" width="100%" scrolling="no"></iframe>
+
+    <div class="edit-recipe-container">
+        <h1>✏️ Editar Receita</h1>
+
+        <div id="message"></div>
+
+        <form id="recipeForm" class="edit-recipe-form">
+            <div class="form-group">
+                <label for="titulo">Título da Receita *</label>
+                <input type="text" id="titulo" required maxlength="200">
+            </div>
+
+            <div class="form-group">
+                <label for="categoria">Categoria *</label>
+                <input type="text" id="categoria" required maxlength="100" placeholder="Ex: Sobremesa, Prato Principal, etc.">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="tempo_de_preparo">Tempo de Preparo (minutos) *</label>
+                    <input type="number" id="tempo_de_preparo" required min="1">
+                </div>
+
+                <div class="form-group">
+                    <label for="porcoes">Porções *</label>
+                    <input type="number" id="porcoes" required min="1">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="ingredientes">Ingredientes *</label>
+                <textarea id="ingredientes" required rows="8" placeholder="Liste os ingredientes (um por linha)"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="modo_de_preparo">Modo de Preparo *</label>
+                <textarea id="modo_de_preparo" required rows="10" placeholder="Descreva o modo de preparo"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="visibilidade">Visibilidade *</label>
+                <select id="visibilidade" required>
+                    <option value="pub">Pública</option>
+                    <option value="priv">Privada</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="foto_da_receita">Foto da Receita</label>
+                <div id="current-image" style="display: none; margin-bottom: 1rem; color: #ccc;"></div>
+                <input type="file" id="foto_da_receita" accept="image/*">
+                <small class="form-hint">Deixe em branco para manter a foto atual</small>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" id="btnCancel" class="btn-cancel">
+                    Cancelar
+                </button>
+                <button type="button" id="btnSubmit" class="btn-submit">
+                    Atualizar Receita
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

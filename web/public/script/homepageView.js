@@ -113,14 +113,20 @@ function renderReceitas(contexto) {
 function createReceitaCard(receita) {
     const card = document.createElement('div');
     card.className = 'receita-card';
-    // Adiciona imagem se disponível
+    // Always add image - use placeholder if not available
+    const img = document.createElement('img');
     if (receita.foto_da_receita) {
-        const img = document.createElement('img');
         img.src = `${backendAddress.replace(/\/$/, '')}${receita.foto_da_receita}`;
-        img.alt = receita.titulo;
-        img.className = 'receita-img';
-        card.appendChild(img);
     }
+    else {
+        img.src = 'https://via.placeholder.com/400x300?text=Sem+Imagem';
+    }
+    img.alt = receita.titulo;
+    img.className = 'receita-img';
+    img.onerror = function () {
+        this.src = 'https://via.placeholder.com/400x300?text=Sem+Imagem';
+    };
+    card.appendChild(img);
     const titulo = document.createElement('h2');
     titulo.textContent = receita.titulo;
     card.appendChild(titulo);

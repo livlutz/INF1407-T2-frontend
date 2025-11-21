@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excluir Receita</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="script/constantes.js"></script>
+    <script src="script/accounts/deletarReceitaView.js"></script>
+</head>
+<body>
+    <iframe src="cabecalho.html" frameborder="0" width="100%" scrolling="no"></iframe>
+
+    <div class="delete-recipe-container">
+        <h1>🗑️ Excluir Receita</h1>
+
+        <div class="delete-warning">
+            <p class="warning-icon">⚠️</p>
+            <h2>Atenção!</h2>
+            <p>Esta ação não pode ser desfeita. A receita será permanentemente excluída.</p>
+        </div>
+
+        <div id="message"></div>
+
+        <div id="recipe-info" class="recipe-info-box">
+            <div class="loading">Carregando informações da receita...</div>
+        </div>
+
+        <p class="confirmation-question">Tem certeza que deseja excluir esta receita?</p>
+
+        <div class="delete-actions">
+            <button type="button" id="btnCancel" class="btn-cancel">
+                Cancelar
+            </button>
+            <button type="button" id="btnDelete" class="btn-delete">
+                Sim, Excluir Receita
+            </button>
+        </div>
+    </div>
+</body>
+</html>

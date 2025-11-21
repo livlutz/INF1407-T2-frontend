@@ -63,10 +63,17 @@ function deleteUserAccount() {
                     window.location.href = 'login.html';
                     return;
                 }
+                if (response.status === 403) {
+                    throw new Error('Você não tem permissão para excluir esta conta');
+                }
+                if (response.status === 404) {
+                    throw new Error('Usuário não encontrado');
+                }
                 throw new Error('Erro ao excluir conta');
             }
-            // Success - account deleted (204 No Content)
-            messageDiv.innerHTML = '<div class="success">Conta excluída com sucesso! Redirecionando...</div>';
+            // Success - backend now returns 200 OK with message
+            const data = yield response.json();
+            messageDiv.innerHTML = '<div class="success">✅ Conta excluída com sucesso! Redirecionando...</div>';
             messageDiv.style.display = 'block';
             // Clear token and redirect
             localStorage.removeItem('token');
