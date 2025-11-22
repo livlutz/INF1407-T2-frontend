@@ -10,6 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 /**
  * Gets the recipe ID from the URL query parameters
+ *
+ * @returns The recipe ID as a number, or null if not found
  */
 function getRecipeIdFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -18,6 +20,9 @@ function getRecipeIdFromUrl() {
 }
 /**
  * Fetches a single recipe from the backend API
+ *
+ * @param id - The ID of the recipe to fetch
+ * @returns Promise with the recipe object or null if not found
  */
 function fetchReceita(id) {
     return __awaiter(this, void 0, void 0, function* () {

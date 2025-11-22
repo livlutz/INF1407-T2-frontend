@@ -18,6 +18,8 @@ interface Receita {
 
 /**
  * Gets the recipe ID from the URL query parameters
+ * 
+ * @returns The recipe ID as a number, or null if not found
  */
 function getRecipeIdFromUrl(): number | null {
     const urlParams = new URLSearchParams(window.location.search);
@@ -27,6 +29,9 @@ function getRecipeIdFromUrl(): number | null {
 
 /**
  * Fetches a single recipe from the backend API
+ * 
+ * @param id - The ID of the recipe to fetch
+ * @returns Promise with the recipe object or null if not found
  */
 async function fetchReceita(id: number): Promise<Receita | null> {
     try {
