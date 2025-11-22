@@ -53,6 +53,8 @@ function fetchReceita(id) {
 }
 /**
  * Renders the recipe details to the DOM
+ *
+ * @param receita - The recipe object to render
  */
 function renderReceitaDetalhes(receita) {
     const container = document.getElementById('receita-detalhes-container');
@@ -187,6 +189,8 @@ function renderReceitaDetalhes(receita) {
 }
 /**
  * Displays an error message
+ *
+ * @param message - The error message to display
  */
 function showError(message) {
     const container = document.getElementById('ver-receita-section');
@@ -204,6 +208,8 @@ function showError(message) {
 }
 /**
  * Initialize the page
+ *
+ * @return Promise that resolves when initialization is complete
  */
 function init() {
     return __awaiter(this, void 0, void 0, function* () {

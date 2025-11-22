@@ -24,6 +24,8 @@ interface AuthResponse {
 
 /**
  * Load and display user profile
+ * 
+ * @return Promise<void>
  */
 async function loadUserProfile(): Promise<void> {
     const content = document.getElementById('perfil-content');
@@ -103,6 +105,8 @@ async function loadUserProfile(): Promise<void> {
 
 /**
  * Display profile information on the page
+ * 
+ * @param profile - UserProfile object
  */
 function displayProfile(profile: UserProfile): void {
     const content = document.getElementById('perfil-content');

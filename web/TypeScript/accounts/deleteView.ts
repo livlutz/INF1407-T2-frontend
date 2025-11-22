@@ -1,6 +1,8 @@
 /**
  * Delete user account
  * Calls DELETE endpoint that deletes the authenticated user
+ * 
+ * @return Promise<void>
  */
 async function deleteUserAccount(): Promise<void> {
     const token = localStorage.getItem('token');

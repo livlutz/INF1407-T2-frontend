@@ -10,6 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 /**
  * Get recipe ID from URL for editing
+ *
+ * @return The recipe ID as a number, or null if not found
  */
 function getEditRecipeIdFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -18,6 +20,8 @@ function getEditRecipeIdFromUrl() {
 }
 /**
  * Load recipe data for editing
+ *
+ * @returns Promise<void>
  */
 function loadRecipeData() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -77,6 +81,8 @@ function loadRecipeData() {
 }
 /**
  * Populate form with recipe data
+ *
+ * @param receita - The recipe data to populate the form with
  */
 function populateForm(receita) {
     document.getElementById('titulo').value = receita.titulo;
@@ -103,6 +109,8 @@ function populateForm(receita) {
 }
 /**
  * Update recipe
+ *
+ * @return Promise<void>
  */
 function updateRecipe() {
     return __awaiter(this, void 0, void 0, function* () {

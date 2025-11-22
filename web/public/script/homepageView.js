@@ -8,10 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 /**
- * Busca receitas públicas da API backend
- * Chama o endpoint PubReceitasListView que retorna receitas públicas ordenadas por -id
+ * Fetch public recipes from the backend API
  *
- * @returns Promise com array de receitas públicas
+ * @returns Promise with an array of public recipes
  */
 function fetchPublicReceitas() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -30,10 +29,9 @@ function fetchPublicReceitas() {
     });
 }
 /**
- * Renderiza a view de lista de receitas públicas (equivalente a PubReceitasListView)
+ * Render public recipes list view with fetched data
  *
- * Esta função busca receitas públicas do backend e as renderiza
- * no DOM, imitando o comportamento da view Django.
+ * @returns Promise that resolves when rendering is complete
  */
 function renderPubReceitasListView() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -43,16 +41,16 @@ function renderPubReceitasListView() {
             tituloJanela: 'Receitas Públicas',
             tituloPagina: 'Homepage - Receitas',
         };
-        // Atualiza o título da página
+        // Update the page title
         document.title = contexto.tituloJanela;
-        // Renderiza as receitas no DOM
+        // Render recipes into the DOM
         renderReceitas(contexto);
     });
 }
 /**
- * Renderiza as receitas no DOM
+ * Renders the list of recipes to the DOM
  *
- * @param contexto - O contexto da página contendo receitas e títulos
+ * @param contexto - The page context containing recipes and titles
  */
 function renderReceitas(contexto) {
     const container = document.getElementById('receitas-container');
@@ -60,20 +58,20 @@ function renderReceitas(contexto) {
         console.error('Container element not found');
         return;
     }
-    // Limpa o conteúdo existente
+    // Clear existing content
     container.innerHTML = '';
-    // Adiciona o título da página
+    // Add page title
     const pageTitle = document.createElement('h1');
     pageTitle.textContent = contexto.tituloPagina;
     container.appendChild(pageTitle);
-    // Verifica se há receitas
+    // Check if there are recipes
     if (contexto.pubReceitas.length === 0) {
         const noRecipesMsg = document.createElement('p');
         noRecipesMsg.textContent = 'Nenhuma receita pública disponível.';
         container.appendChild(noRecipesMsg);
         return;
     }
-    // Cria a lista de receitas
+    // Create the recipes list
     const receitasList = document.createElement('div');
     receitasList.className = 'receitas-list';
     contexto.pubReceitas.forEach(receita => {
@@ -83,10 +81,10 @@ function renderReceitas(contexto) {
     container.appendChild(receitasList);
 }
 /**
- * Cria um elemento de cartão de receita
+ * Create a recipe card element
  *
- * @param receita - O objeto receita
- * @returns HTMLElement representando o cartão de receita
+ * @param receita - The recipe object
+ * @returns HTMLElement representing the recipe card
  */
 function createReceitaCard(receita) {
     const card = document.createElement('div');
@@ -109,12 +107,12 @@ function createReceitaCard(receita) {
     const titulo = document.createElement('h2');
     titulo.textContent = receita.titulo;
     card.appendChild(titulo);
-    // Mostra o nome do autor
+    // Show author name
     const autor = document.createElement('p');
     autor.className = 'receita-autor';
     autor.textContent = `Por: ${receita.autor_nome}`;
     card.appendChild(autor);
-    // Mostra a categoria
+    // Show category
     const categoria = document.createElement('span');
     categoria.className = 'receita-categoria';
     categoria.textContent = receita.categoria;
@@ -126,11 +124,11 @@ function createReceitaCard(receita) {
         <span>🍽️ ${receita.porcoes} porções</span>
     `;
     card.appendChild(detalhes);
-    // Adiciona evento de clique para visualizar a receita completa
+    // Add click event to view full recipe
     card.addEventListener('click', () => {
         window.location.href = `receita.html?id=${receita.id}`;
     });
     return card;
 }
-// Exporta funções
+// Export functions
 export { fetchPublicReceitas, renderPubReceitasListView, renderReceitas, createReceitaCard };

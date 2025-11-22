@@ -10,6 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 /**
  * Load current user data into the form
+ *
+ * @return Promise<void>
  */
 function loadCurrentUserData() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -90,6 +92,8 @@ function loadCurrentUserData() {
 }
 /**
  * Update user profile
+ *
+ * @return Promise<void>
  */
 function updateUserProfile() {
     return __awaiter(this, void 0, void 0, function* () {

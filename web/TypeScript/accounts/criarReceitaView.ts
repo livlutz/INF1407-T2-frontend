@@ -1,5 +1,7 @@
 /**
  * Create new recipe
+ * 
+ * @returns Promise<void>
  */
 async function createRecipe(): Promise<void> {
     const token = localStorage.getItem('token');

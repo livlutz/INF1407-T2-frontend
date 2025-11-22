@@ -1,5 +1,7 @@
 /**
  * Load user's recipes
+ * 
+ * @returns Promise<void>
  */
 async function loadUserRecipes(): Promise<void> {
     const token = localStorage.getItem('token');
@@ -71,6 +73,8 @@ async function loadUserRecipes(): Promise<void> {
 
 /**
  * Display user's recipes
+ * 
+ * @param receitas - Array of recipe objects
  */
 function displayUserRecipes(receitas: any[]): void {
     const receitasContainer = document.getElementById('receitas-container');
@@ -151,6 +155,8 @@ function displayUserRecipes(receitas: any[]): void {
 
 /**
  * Edit recipe
+ * 
+ * @param id - The ID of the recipe to edit
  */
 function editarReceita(id: number): void {
     window.location.href = `editarReceita.html?id=${id}`;
@@ -158,6 +164,8 @@ function editarReceita(id: number): void {
 
 /**
  * Delete recipe - redirect to confirmation page
+ * 
+ * @param id - The ID of the recipe to delete
  */
 function deletarReceita(id: number): void {
     window.location.href = `deletarReceita.html?id=${id}`;

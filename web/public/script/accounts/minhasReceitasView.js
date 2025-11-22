@@ -10,6 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 /**
  * Load user's recipes
+ *
+ * @returns Promise<void>
  */
 function loadUserRecipes() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -74,6 +76,8 @@ function loadUserRecipes() {
 }
 /**
  * Display user's recipes
+ *
+ * @param receitas - Array of recipe objects
  */
 function displayUserRecipes(receitas) {
     const receitasContainer = document.getElementById('receitas-container');
@@ -149,12 +153,16 @@ function displayUserRecipes(receitas) {
 }
 /**
  * Edit recipe
+ *
+ * @param id - The ID of the recipe to edit
  */
 function editarReceita(id) {
     window.location.href = `editarReceita.html?id=${id}`;
 }
 /**
  * Delete recipe - redirect to confirmation page
+ *
+ * @param id - The ID of the recipe to delete
  */
 function deletarReceita(id) {
     window.location.href = `deletarReceita.html?id=${id}`;

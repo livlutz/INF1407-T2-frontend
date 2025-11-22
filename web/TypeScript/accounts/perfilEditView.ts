@@ -23,6 +23,8 @@ interface UserProfile {
 
 /**
  * Load current user data into the form
+ * 
+ * @return Promise<void>
  */
 async function loadCurrentUserData(): Promise<void> {
     const token = localStorage.getItem('token');
@@ -113,6 +115,8 @@ async function loadCurrentUserData(): Promise<void> {
 
 /**
  * Update user profile
+ * 
+ * @return Promise<void>
  */
 async function updateUserProfile(): Promise<void> {
     const token = localStorage.getItem('token');

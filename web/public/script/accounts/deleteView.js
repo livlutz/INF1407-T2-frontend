@@ -11,6 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 /**
  * Delete user account
  * Calls DELETE endpoint that deletes the authenticated user
+ *
+ * @return Promise<void>
  */
 function deleteUserAccount() {
     return __awaiter(this, void 0, void 0, function* () {

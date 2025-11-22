@@ -1,5 +1,7 @@
 /**
  * Change user password
+ * 
+ * @return Promise<void>
  */
 async function changePassword(): Promise<void> {
     const token = localStorage.getItem('token');

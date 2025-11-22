@@ -10,6 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 /**
  * Load and display user profile
+ *
+ * @return Promise<void>
  */
 function loadUserProfile() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -80,6 +82,8 @@ function loadUserProfile() {
 }
 /**
  * Display profile information on the page
+ *
+ * @param profile - UserProfile object
  */
 function displayProfile(profile) {
     const content = document.getElementById('perfil-content');

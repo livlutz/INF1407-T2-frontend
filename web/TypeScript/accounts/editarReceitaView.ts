@@ -15,6 +15,8 @@ interface ReceitaData {
 
 /**
  * Get recipe ID from URL for editing
+ * 
+ * @return The recipe ID as a number, or null if not found
  */
 function getEditRecipeIdFromUrl(): number | null {
     const urlParams = new URLSearchParams(window.location.search);
@@ -24,6 +26,8 @@ function getEditRecipeIdFromUrl(): number | null {
 
 /**
  * Load recipe data for editing
+ * 
+ * @returns Promise<void>
  */
 async function loadRecipeData(): Promise<void> {
     const token = localStorage.getItem('token');
@@ -88,6 +92,8 @@ async function loadRecipeData(): Promise<void> {
 
 /**
  * Populate form with recipe data
+ * 
+ * @param receita - The recipe data to populate the form with
  */
 function populateForm(receita: ReceitaData): void {
     (document.getElementById('titulo') as HTMLInputElement).value = receita.titulo;
@@ -116,6 +122,8 @@ function populateForm(receita: ReceitaData): void {
 
 /**
  * Update recipe
+ * 
+ * @return Promise<void>
  */
 async function updateRecipe(): Promise<void> {
     const token = localStorage.getItem('token');

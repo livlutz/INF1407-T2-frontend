@@ -64,6 +64,8 @@ async function fetchReceita(id: number): Promise<Receita | null> {
 
 /**
  * Renders the recipe details to the DOM
+ * 
+ * @param receita - The recipe object to render
  */
 function renderReceitaDetalhes(receita: Receita): void {
     const container = document.getElementById('receita-detalhes-container');
@@ -228,6 +230,8 @@ function renderReceitaDetalhes(receita: Receita): void {
 
 /**
  * Displays an error message
+ * 
+ * @param message - The error message to display
  */
 function showError(message: string): void {
     const container = document.getElementById('ver-receita-section');
@@ -246,6 +250,8 @@ function showError(message: string): void {
 
 /**
  * Initialize the page
+ * 
+ * @return Promise that resolves when initialization is complete
  */
 async function init(): Promise<void> {
     const receitaId = getRecipeIdFromUrl();

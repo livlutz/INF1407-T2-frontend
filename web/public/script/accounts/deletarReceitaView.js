@@ -10,6 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 /**
  * Get recipe ID from URL
+ *
+ * @return The recipe ID as a number, or null if not found
  */
 function getDeleteRecipeIdFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -18,6 +20,8 @@ function getDeleteRecipeIdFromUrl() {
 }
 /**
  * Load recipe info for deletion confirmation
+ *
+ * @returns Promise<void>
  */
 function loadRecipeForDeletion() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -87,6 +91,8 @@ function loadRecipeForDeletion() {
 }
 /**
  * Display recipe information
+ *
+ * @param receita - The recipe data to display
  */
 function displayRecipeInfo(receita) {
     const recipeInfoDiv = document.getElementById('recipe-info');
@@ -103,6 +109,8 @@ function displayRecipeInfo(receita) {
 }
 /**
  * Delete recipe
+ *
+ * @return Promise<void>
  */
 function confirmDeleteRecipe() {
     return __awaiter(this, void 0, void 0, function* () {

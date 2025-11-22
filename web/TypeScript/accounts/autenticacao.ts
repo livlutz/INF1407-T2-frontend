@@ -107,6 +107,8 @@ export function updateHeaderAuthentication(): void {
 
 /**
  * Check if user is authenticated
+ * 
+ * @return boolean indicating authentication status
  */
 export function isAuthenticated(): boolean {
     const token = localStorage.getItem('authToken');
@@ -115,6 +117,8 @@ export function isAuthenticated(): boolean {
 
 /**
  * Get current logged-in username
+ * 
+ * @return current username or null if not logged in
  */
 export function getCurrentUsername(): string | null {
     return localStorage.getItem('username');

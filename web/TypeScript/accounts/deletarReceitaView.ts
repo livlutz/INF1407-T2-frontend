@@ -1,5 +1,7 @@
 /**
  * Get recipe ID from URL
+ * 
+ * @return The recipe ID as a number, or null if not found
  */
 function getDeleteRecipeIdFromUrl(): number | null {
     const urlParams = new URLSearchParams(window.location.search);
@@ -9,6 +11,8 @@ function getDeleteRecipeIdFromUrl(): number | null {
 
 /**
  * Load recipe info for deletion confirmation
+ * 
+ * @returns Promise<void>
  */
 async function loadRecipeForDeletion(): Promise<void> {
     const token = localStorage.getItem('token');
@@ -83,6 +87,8 @@ async function loadRecipeForDeletion(): Promise<void> {
 
 /**
  * Display recipe information
+ * 
+ * @param receita - The recipe data to display
  */
 function displayRecipeInfo(receita: any): void {
     const recipeInfoDiv = document.getElementById('recipe-info');
@@ -100,6 +106,8 @@ function displayRecipeInfo(receita: any): void {
 
 /**
  * Delete recipe
+ * 
+ * @return Promise<void>
  */
 async function confirmDeleteRecipe(): Promise<void> {
     const token = localStorage.getItem('token');

@@ -10,6 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 /**
  * Change user password
+ *
+ * @return Promise<void>
  */
 function changePassword() {
     return __awaiter(this, void 0, void 0, function* () {

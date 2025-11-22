@@ -10,6 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 /**
  * Create new recipe
+ *
+ * @returns Promise<void>
  */
 function createRecipe() {
     return __awaiter(this, void 0, void 0, function* () {
