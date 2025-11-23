@@ -5,18 +5,28 @@
     <script src="script/constantes.js"></script>
     <script src="script/setFavicon.js"></script>
     <script type="module" src="script/accounts/autenticacao.js"></script>
+    <style>
+        html, body { min-height: 0 !important; background: transparent !important; }
+        .site-header { display: flex; align-items: center; gap: 8px; padding: 0.6rem 1rem; background: #181818; }
+        .site-header #identificacao { margin-left: 0.5rem; }
+    </style>
 </head>
 <body>
-    <img id="header-favicon" src="" alt="Logo" style="width: 56px; height: 56px; vertical-align: middle; margin-right: 8px; border-radius: 50%; object-fit: cover;">
-    <a href="/" target="_top" class="modern-btn">Home</a>
-    <div id="unlogged" class="visivel">
-         <a href="login.html" target="_top" class="modern-btn">Login</a>
-         <a href="cadastro.html" target="_top" class="modern-btn">Cadastrar</a>
+    <div class="site-header">
+        <img id="header-favicon" src="" alt="Logo" style="width: 56px; height: 56px; vertical-align: middle; margin-right: 8px; border-radius: 50%; object-fit: cover;">
+        <a href="/" target="_top" class="modern-btn">Home</a>
+        <div id="unlogged" class="visivel">
+             <a href="login.html" target="_top" class="modern-btn">Login</a>
+             <a href="cadastro.html" target="_top" class="modern-btn">Cadastrar</a>
+        </div>
+        <div id="logged" class="invisivel">
+             <a href="perfil.html" target="_top" class="modern-btn">Meu Perfil</a>
+             <a href="logout.html" target="_top" class="modern-btn">Logout</a>
+        </div>
+        <div style="margin-left:auto; display:flex; align-items:center; gap:6px; color:#fff;">
+            <span style="font-size:1rem; color:#ccc;">Você é</span>
+            <div id="identificacao" class="mesmaLinha">visitante</div>
+        </div>
     </div>
-    <div id="logged" class="invisivel">
-         <a href="perfil.html" target="_top" class="modern-btn">Meu Perfil</a>
-         <a href="logout.html" target="_top" class="modern-btn">Logout</a>
-    </div>
-     Você é <div id="identificacao" class="mesmaLinha">visitante</div>
 </body>
 </html>
