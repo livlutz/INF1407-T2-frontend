@@ -192,9 +192,27 @@ function renderReceitaDetalhes(receita: Receita): void {
 
     // Actions buttons
     if (token) {
-        // Show Edit/Delete buttons if the logged user is the author
-        const loggedUsername = localStorage.getItem('username');
-        if (loggedUsername && loggedUsername === receita.autor_nome) {
+        // Determine if the logged user is the author (prefer userId, fallback to username)
+        let isAuthor = false;
+        const loggedUserId = localStorage.getItem('userId');
+        if (loggedUserId && receita.autor !== undefined && receita.autor !== null) {
+            try {
+                if (parseInt(loggedUserId, 10) === receita.autor) {
+                    isAuthor = true;
+                }
+            } catch (e) {
+                // ignore parse errors
+            }
+        }
+
+        if (!isAuthor) {
+            const loggedUsername = localStorage.getItem('username');
+            if (loggedUsername && loggedUsername === receita.autor_nome) {
+                isAuthor = true;
+            }
+        }
+
+        if (isAuthor) {
             const actionsDiv = document.createElement('div');
             actionsDiv.style.display = 'flex';
             actionsDiv.style.gap = '1rem';

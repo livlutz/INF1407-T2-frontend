@@ -28,7 +28,7 @@ a:hover {
   color: #ffe0b2;
 }
 
-.link a {
+.link hover {
   color: #ff9800;
   font-weight: 600;
   text-decoration: underline;
@@ -159,6 +159,95 @@ a:hover {
   max-width: 800px;
   margin: 0 auto;
   padding: 0 1rem;
+}
+
+.delete-recipe-container,
+.delete-container,
+.edit-profile-container,
+.edit-recipe-container,
+.password-change-container,
+.cadastro-container,
+.logout-container,
+.login-container,
+.delete-recipe-container,
+.edit-recipe-container {
+    max-width: 400px;
+    margin: 2.5rem auto;
+    padding: 2rem;
+    background: #232323;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+    border: 1px solid #333;
+}
+
+/* Login-specific tweaks */
+.login-container .form-group label {
+    color: #ff9800;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.login-container input[type="text"],
+.login-container input[type="password"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 2px solid #333;
+    background: #181818;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.login-container .form-actions {
+    margin-top: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.login-container .link {
+    margin-top: 0.25rem;
+}
+
+/* Heading and text within those containers */
+.delete-recipe-container h1,
+.delete-container h1,
+.edit-profile-container h1,
+.edit-recipe-container h1,
+.password-change-container h1,
+.cadastro-container .cadastro-title,
+.logout-card h2 {
+    color: #ff9800;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.delete-recipe-container .delete-warning,
+.delete-container .warning-message,
+.logout-card,
+.cadastro-card,
+.edit-recipe-container .edit-recipe-form,
+.edit-profile-container .edit-profile-form,
+.password-change-container .password-change-form {
+    margin-top: 1rem;
+}
+
+/* Center form action buttons consistently */
+.form-actions,
+.logout-actions,
+.delete-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+/* Make sure small helper text uses readable color */
+.form-hint,
+.help-text {
+    color: #bdbdbd;
 }
 
 .ver-receita-card{

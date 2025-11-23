@@ -3,11 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Bem-vindo!</title>
 </head>
 <body>
     <iframe src="cabecalho.html" frameborder="0" width="100%"></iframe>
-    <h1>Bem vindo!</h1>
-    <button id="btnHomepage" onclick="window.location.href='index.html'">Ir para Homepage</button>
+
+    <main class="logout-container">
+        <div class="logout-card" style="text-align:center;">
+            <h2 id="welcome-title" style="margin-bottom:2rem;">Bem vindo!</h2>
+            <button id="btnHomepage" class="modern-btn" style="margin-top:1.5rem;" onclick="window.location.href='index.html'">Ir para Homepage</button>
+        </div>
+    </main>
+    <script src="script/accounts/loginDone.js"></script>
 </body>
 </html>

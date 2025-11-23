@@ -12,17 +12,28 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <iframe src="cabecalho.html" frameborder="0" width="100%" height="50" id="cabecalho"></iframe>
-    <form>
-    <table>
-        <tbody>
-            <tr><td>Username:</td><td><input type="text" name="username" id="username"></td></tr>
-            <tr><td>Password:</td><td><input type="password" name="password" id="password"></td></tr>
-            <tr><td colspan="2" align="center"><button id="btnLogin" class="modern-btn">Login</button></td></tr>
-            <tr><td colspan="2" align="center"><a href="changePassword.html" class="link">Esqueceu a senha?</a></td></tr>
-            <tr><td colspan="2" align="center"><div id="msg" style="display: none;"></div></td></tr>
-        </tbody>
-    </table>
-    </form>
+    <iframe src="cabecalho.html" frameborder="0" width="100%" id="cabecalho"></iframe>
+
+    <main class="login-container" role="main">
+        <h2 class="cadastro-title">Login</h2>
+
+        <form id="login-form" class="login-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" autocomplete="username">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" autocomplete="current-password">
+            </div>
+
+            <div class="form-actions">
+                <button id="btnLogin" class="modern-btn">Login</button>
+                <a href="changePassword.html" class="link">Esqueceu a senha?</a>
+                <div id="msg" style="display: none;"></div>
+            </div>
+        </form>
+    </main>
 </body>
 </html>
