@@ -81,37 +81,23 @@ onload = () => {
             errorDiv.textContent = 'A senha deve ter pelo menos 8 caracteres.';
             return;
         }
-        // Create JSON payload
-        const payload = {
-            username: username,
-            email: email,
-            first_name: firstName,
-            last_name: lastName,
-            password: password1,
-            password_confirm: password2,
-            foto_de_perfil: null
-        };
-        // If there's a profile pic, convert to base64
+        // Monta FormData para multipart
+        const formData = new FormData();
+        formData.append('username', username);
+        formData.append('email', email);
+        formData.append('first_name', firstName);
+        formData.append('last_name', lastName);
+        formData.append('password', password1);
+        formData.append('password_confirm', password2);
         if (profilePic) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                var _a;
-                payload.foto_de_perfil = (_a = e.target) === null || _a === void 0 ? void 0 : _a.result;
-                sendRequest(payload);
-            };
-            reader.readAsDataURL(profilePic);
+            formData.append('foto_de_perfil', profilePic);
         }
-        else {
-            sendRequest(payload);
-        }
+        sendRequest(formData);
     });
-    function sendRequest(payload) {
+    function sendRequest(formData) {
         fetch(backendAddress + 'usuarios/cadastro/', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
+            body: formData
         })
             .then((response) => {
             if (response.ok) {

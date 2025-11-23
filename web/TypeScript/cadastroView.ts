@@ -60,6 +60,7 @@ onload = () => {
     });
 
     // Handle form submission
+
     form.addEventListener('submit', (evento) => {
         evento.preventDefault();
         clearErrors();
@@ -87,37 +88,25 @@ onload = () => {
             return;
         }
 
-        // Create JSON payload
-        const payload: any = {
-            username: username,
-            email: email,
-            first_name: firstName,
-            last_name: lastName,
-            password: password1,
-            password_confirm: password2,
-            foto_de_perfil: null
-        };
-
-        // If there's a profile pic, convert to base64
+        // Monta FormData para multipart
+        const formData = new FormData();
+        formData.append('username', username);
+        formData.append('email', email);
+        formData.append('first_name', firstName);
+        formData.append('last_name', lastName);
+        formData.append('password', password1);
+        formData.append('password_confirm', password2);
         if (profilePic) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                payload.foto_de_perfil = e.target?.result as string;
-                sendRequest(payload);
-            };
-            reader.readAsDataURL(profilePic);
-        } else {
-            sendRequest(payload);
+            formData.append('foto_de_perfil', profilePic);
         }
+
+        sendRequest(formData);
     });
 
-    function sendRequest(payload: any): void {
+    function sendRequest(formData: FormData): void {
         fetch(backendAddress + 'usuarios/cadastro/', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
+            body: formData
         })
         .then((response: Response) => {
             if (response.ok) {
