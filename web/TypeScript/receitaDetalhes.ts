@@ -77,6 +77,9 @@ function renderReceitaDetalhes(receita: Receita): void {
 
     container.className = 'ver-receita-section';
 
+    // Check if user is logged in
+    const token = localStorage.getItem('token');
+
     // Clear existing content
     container.innerHTML = '';
 
@@ -149,13 +152,11 @@ function renderReceitaDetalhes(receita: Receita): void {
     meta.appendChild(itens);
     content.appendChild(meta);
 
-    // TODO: ações de editar/excluir para o autor da receita
-
     // Ingredientes section
     const infos = document.createElement('div');
     infos.className = 'ver-receita-section';
     const ingredientesTitle = document.createElement('h2');
-    ingredientesTitle.className = 'ver-receita-title';
+    ingredientesTitle.className = 'ver-receita-title2';
     ingredientesTitle.textContent = 'Ingredientes';
     infos.appendChild(ingredientesTitle);
 
@@ -178,7 +179,7 @@ function renderReceitaDetalhes(receita: Receita): void {
     const infos2 = document.createElement('div');
     infos2.className = 'ver-receita-section';
     const preparoTitle = document.createElement('h2');
-    preparoTitle.className = 'ver-receita-title';
+    preparoTitle.className = 'ver-receita-title2';
     preparoTitle.textContent = 'Modo de Preparo';
     infos2.appendChild(preparoTitle);
 
@@ -189,8 +190,41 @@ function renderReceitaDetalhes(receita: Receita): void {
     infos2.appendChild(preparo);
     content.appendChild(infos2);
 
-    // Action buttons
-    const token = localStorage.getItem('token');
+    // Actions buttons
+    if (token) {
+        // Show Edit/Delete buttons if the logged user is the author
+        const loggedUsername = localStorage.getItem('username');
+        if (loggedUsername && loggedUsername === receita.autor_nome) {
+            const actionsDiv = document.createElement('div');
+            actionsDiv.style.display = 'flex';
+            actionsDiv.style.gap = '1rem';
+            actionsDiv.style.marginTop = '1.5rem';
+
+            // Edit button
+            const editBtn = document.createElement('button');
+            editBtn.className = 'modern-btn';
+            editBtn.textContent = '✏️ Edit';
+            editBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                window.location.href = `editarReceita.html?id=${receita.id}`;
+            });
+            actionsDiv.appendChild(editBtn);
+
+            // Delete button
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'modern-btn';
+            deleteBtn.textContent = '🗑️ Delete';
+            deleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                window.location.href = `deletarReceita.html?id=${receita.id}`;
+            });
+            actionsDiv.appendChild(deleteBtn);
+
+            content.appendChild(actionsDiv);
+        }
+    }
+
+    // Navigation buttons
     const buttonsDiv = document.createElement('div');
     buttonsDiv.style.display = 'flex';
     buttonsDiv.style.gap = '1rem';
@@ -210,8 +244,6 @@ function renderReceitaDetalhes(receita: Receita): void {
     if (token) {
         const myRecipesBtn = document.createElement('button');
         myRecipesBtn.className = 'modern-btn';
-        myRecipesBtn.style.background = '#ff9800';
-        myRecipesBtn.style.color = '#181818';
         myRecipesBtn.textContent = '📖 Minhas Receitas';
         myRecipesBtn.addEventListener('click', () => {
             window.location.href = 'minhasReceitas.html';

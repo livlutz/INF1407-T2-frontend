@@ -34,6 +34,8 @@ onload = () => {
             .then((data) => {
             const token = data.token;
             localStorage.setItem('token', token);
+            // Store username locally so other pages can know the logged user
+            localStorage.setItem('username', username.toString());
             window.location.replace('loginDone.html');
         })
             .catch(erro => {
