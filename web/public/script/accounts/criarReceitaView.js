@@ -25,6 +25,8 @@ function createRecipe() {
         const cancelBtn = document.getElementById('btnCancel');
         if (!messageDiv || !submitBtn || !cancelBtn)
             return;
+        submitBtn.className = 'modern-btn';
+        cancelBtn.className = 'cancel-modern-btn';
         // Get form values
         const titulo = document.getElementById('titulo').value.trim();
         const ingredientes = document.getElementById('ingredientes').value.trim();

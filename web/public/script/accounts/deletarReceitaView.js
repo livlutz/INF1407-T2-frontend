@@ -207,12 +207,16 @@ function initializeDeleteRecipePage() {
     const deleteBtn = document.getElementById('btnDelete');
     const cancelBtn = document.getElementById('btnCancel');
     if (deleteBtn) {
+        deleteBtn.className = 'modern-btn';
+        deleteBtn.style.backgroundColor = '#e74c3c';
+        deleteBtn.style.borderColor = '#e74c3c';
         deleteBtn.addEventListener('click', (e) => {
             e.preventDefault();
             confirmDeleteRecipe();
         });
     }
     if (cancelBtn) {
+        cancelBtn.className = 'cancel-modern-btn';
         cancelBtn.addEventListener('click', (e) => {
             e.preventDefault();
             cancelRecipeDeletion();

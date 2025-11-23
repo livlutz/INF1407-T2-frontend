@@ -17,6 +17,9 @@ async function createRecipe(): Promise<void> {
 
     if (!messageDiv || !submitBtn || !cancelBtn) return;
 
+    submitBtn.className = 'modern-btn';
+    cancelBtn.className = 'cancel-modern-btn';
+    
     // Get form values
     const titulo = (document.getElementById('titulo') as HTMLInputElement).value.trim();
     const ingredientes = (document.getElementById('ingredientes') as HTMLTextAreaElement).value.trim();

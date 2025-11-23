@@ -10,10 +10,16 @@
 </head>
 <body>
     <iframe src="cabecalho.html" frameborder="0" width="100%"></iframe>
-    <h2>Confirmar Logout</h2>
-    <p>Tem certeza que deseja sair?</p>
-    <button type="button" id="logout">Sim</button>
-    <button type="button" id="btnCancel" onclick="window.location.href='index.html'">Não</button>
-    <div id="mensagem"></div>
+    <div class="logout-container">
+        <div class="logout-card">
+            <h2>Confirmar Logout</h2>
+            <p>Tem certeza que deseja sair?</p>
+            <div class="logout-actions">
+                <button type="button" id="logout" class="modern-btn">Sim</button>
+                <button type="button" id="btnCancel" class="modern-btn" onclick="window.location.href='index.html'">Não</button>
+            </div>
+            <div id="mensagem"></div>
+        </div>
+    </div>
 </body>
 </html>

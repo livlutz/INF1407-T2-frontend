@@ -233,12 +233,14 @@ function initializeEditRecipePage() {
     const submitBtn = document.getElementById('btnSubmit');
     const cancelBtn = document.getElementById('btnCancel');
     if (submitBtn) {
+        submitBtn.className = 'modern-btn';
         submitBtn.addEventListener('click', (e) => {
             e.preventDefault();
             updateRecipe();
         });
     }
     if (cancelBtn) {
+        cancelBtn.className = 'cancel-modern-btn';
         cancelBtn.addEventListener('click', (e) => {
             e.preventDefault();
             cancelRecipeEdit();

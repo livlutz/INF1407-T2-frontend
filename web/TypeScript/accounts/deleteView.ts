@@ -17,7 +17,9 @@ async function deleteUserAccount(): Promise<void> {
     const cancelBtn = document.getElementById('btnCancel') as HTMLButtonElement;
 
     if (!messageDiv || !deleteBtn || !cancelBtn) return;
-
+    
+    deleteBtn.classList.add('modern-btn');
+    cancelBtn.classList.add('modern-btn');
     // Disable buttons during request
     deleteBtn.disabled = true;
     cancelBtn.disabled = true;

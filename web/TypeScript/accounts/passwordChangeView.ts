@@ -138,6 +138,7 @@ function initializePasswordChangePage(): void {
     const cancelBtn = document.getElementById('btnCancel');
 
     if (submitBtn) {
+        submitBtn.className = 'modern-btn';
         submitBtn.addEventListener('click', (e) => {
             e.preventDefault();
             changePassword();
@@ -145,6 +146,7 @@ function initializePasswordChangePage(): void {
     }
 
     if (cancelBtn) {
+        cancelBtn.className = 'cancel-modern-btn';
         cancelBtn.addEventListener('click', (e) => {
             e.preventDefault();
             cancelPasswordChange();

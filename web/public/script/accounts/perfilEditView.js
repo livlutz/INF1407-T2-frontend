@@ -212,12 +212,14 @@ function initializeEditProfilePage() {
     const submitBtn = document.getElementById('btnSubmit');
     const cancelBtn = document.getElementById('btnCancel');
     if (submitBtn) {
+        submitBtn.className = 'modern-btn';
         submitBtn.addEventListener('click', (e) => {
             e.preventDefault();
             updateUserProfile();
         });
     }
     if (cancelBtn) {
+        cancelBtn.className = 'cancel-modern-btn';
         cancelBtn.addEventListener('click', (e) => {
             e.preventDefault();
             cancelProfileEdit();
