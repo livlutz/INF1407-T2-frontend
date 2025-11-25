@@ -32,7 +32,7 @@ function fetchVisibleReceitas() {
                 if (userId) {
                     // If user ID is found, fetch recipes visible to this user
                     // including public and user's private recipes
-                    response = yield fetch(backendAddress + `"receitas/"${userId}/`, {
+                    response = yield fetch(backendAddress + `receitas/${userId}/`, {
                         method: 'GET',
                         headers: {
                             'Authorization': tokenKeyword + token,
