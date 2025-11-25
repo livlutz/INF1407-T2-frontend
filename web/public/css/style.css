@@ -1152,3 +1152,46 @@ a:hover {
     display: block;
     margin-top: 0.5rem;
 }
+
+/* Password Reset Token Message Styles */
+#tokenMessage {
+    display: none;
+    background-color: #f0f8ff;
+    border: 2px solid #4CAF50;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    max-width: 600px;
+}
+
+#tokenMessage h2 {
+    color: #4CAF50;
+    margin-top: 0;
+}
+
+.token-box {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    margin: 15px 0;
+    font-family: monospace;
+    font-size: 16px;
+    word-break: break-all;
+}
+
+#proceedButton {
+    display: none;
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 15px;
+}
+
+#proceedButton:hover {
+    background-color: #45a049;
+}

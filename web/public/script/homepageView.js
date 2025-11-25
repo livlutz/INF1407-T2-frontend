@@ -30,9 +30,9 @@ function fetchVisibleReceitas() {
                 const authData = yield authResponse.json();
                 userId = authData.id || authData.user_id;
                 if (userId) {
-                    // If user ID is found, try to fetch recipes visible to this user
-                    // including public and user's private recipes.
-                    response = yield fetch(`${backendAddress}receitas/${userId}/`, {
+                    // If user ID is found, fetch recipes visible to this user
+                    // including public and user's private recipes
+                    response = yield fetch(backendAddress + `"receitas/"${userId}/`, {
                         method: 'GET',
                         headers: {
                             'Authorization': tokenKeyword + token,
@@ -41,8 +41,8 @@ function fetchVisibleReceitas() {
                     });
                 }
             }
-            if (!userId | !response) {
-                // If no user ID and no response yet, fetch only public recipes
+            if (!userId) {
+                // If no user ID, fetch only public recipes
                 response = yield fetch(backendAddress + "receitas/");
             }
             if (response) {

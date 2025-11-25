@@ -24,12 +24,27 @@ onload = () => {
                 return response.json();
             }
             else {
-                if (response.status == 401) {
-                    msg.innerHTML = 'Usuário ou senha inválidos.';
-                    msg.style.display = 'block';
-                    msg.style.color = 'red';
-                }
-                throw new Error('Falha na autenticação');
+                return response.text().then(text => {
+                    console.error('Erro de login (status ' + response.status + '):', text);
+
+                    if (response.status == 401 || response.status == 400) {
+                        try {
+                            const errorData = JSON.parse(text);
+                            msg.innerHTML = errorData.non_field_errors?.[0] ||
+                                           errorData.error ||
+                                           'Usuário ou senha inválidos.';
+                        } catch(e) {
+                            msg.innerHTML = 'Usuário ou senha inválidos.';
+                        }
+                        msg.style.display = 'block';
+                        msg.style.color = 'red';
+                    } else {
+                        msg.innerHTML = 'Erro ao tentar fazer login (status ' + response.status + ').';
+                        msg.style.display = 'block';
+                        msg.style.color = 'red';
+                    }
+                    throw new Error('Falha na autenticação');
+                });
             }
         })
         .then((data: { token: string }) => {

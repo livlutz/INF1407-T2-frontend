@@ -23,12 +23,29 @@ onload = () => {
                 return response.json();
             }
             else {
-                if (response.status == 401) {
-                    msg.innerHTML = 'Usuário ou senha inválidos.';
-                    msg.style.display = 'block';
-                    msg.style.color = 'red';
-                }
-                throw new Error('Falha na autenticação');
+                return response.text().then(text => {
+                    var _a;
+                    console.error('Erro de login (status ' + response.status + '):', text);
+                    if (response.status == 401 || response.status == 400) {
+                        try {
+                            const errorData = JSON.parse(text);
+                            msg.innerHTML = ((_a = errorData.non_field_errors) === null || _a === void 0 ? void 0 : _a[0]) ||
+                                errorData.error ||
+                                'Usuário ou senha inválidos.';
+                        }
+                        catch (e) {
+                            msg.innerHTML = 'Usuário ou senha inválidos.';
+                        }
+                        msg.style.display = 'block';
+                        msg.style.color = 'red';
+                    }
+                    else {
+                        msg.innerHTML = 'Erro ao tentar fazer login (status ' + response.status + ').';
+                        msg.style.display = 'block';
+                        msg.style.color = 'red';
+                    }
+                    throw new Error('Falha na autenticação');
+                });
             }
         })
             .then((data) => {
