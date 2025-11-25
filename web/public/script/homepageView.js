@@ -8,34 +8,66 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 /**
- * Fetch public recipes from the backend API
+ * Fetch visible recipes from the backend API
  *
- * @returns Promise with an array of public recipes
+ * @returns Promise with an array of visible recipes
  */
-function fetchPublicReceitas() {
+function fetchVisibleReceitas() {
     return __awaiter(this, void 0, void 0, function* () {
+        const token = localStorage.getItem('token');
         try {
-            const response = yield fetch(backendAddress + "receitas/");
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+            // First, try to get user ID from token-auth
+            const authResponse = yield fetch(backendAddress + 'accounts/token-auth/', {
+                method: 'GET',
+                headers: {
+                    'Authorization': tokenKeyword + token
+                }
+            });
+            var userId = null;
+            var response = null;
+            var receitas = [];
+            if (authResponse.ok) {
+                const authData = yield authResponse.json();
+                userId = authData.id || authData.user_id;
+                if (userId) {
+                    // If user ID is found, try to fetch recipes visible to this user
+                    // including public and user's private recipes.
+                    response = yield fetch(`${backendAddress}receitas/${userId}/`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': tokenKeyword + token,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                }
             }
-            const receitas = yield response.json();
+            if (!userId | !response) {
+                // If no user ID and no response yet, fetch only public recipes
+                response = yield fetch(backendAddress + "receitas/");
+            }
+            if (response) {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                receitas = yield response.json();
+            }
             return receitas;
+            ;
         }
         catch (error) {
-            console.error('Error fetching public recipes:', error);
+            console.error('Error fetching recipes:', error);
             return [];
         }
     });
 }
 /**
- * Render public recipes list view with fetched data
+ * Render visible recipes list view with fetched data
  *
  * @returns Promise that resolves when rendering is complete
  */
 function renderPubReceitasListView() {
     return __awaiter(this, void 0, void 0, function* () {
-        const receitas = yield fetchPublicReceitas();
+        const receitas = yield fetchVisibleReceitas();
         const contexto = {
             pubReceitas: receitas,
             tituloJanela: 'Receitas Públicas',
@@ -67,7 +99,7 @@ function renderReceitas(contexto) {
     // Check if there are recipes
     if (contexto.pubReceitas.length === 0) {
         const noRecipesMsg = document.createElement('p');
-        noRecipesMsg.textContent = 'Nenhuma receita pública disponível.';
+        noRecipesMsg.textContent = 'Nenhuma receita visível disponível.';
         container.appendChild(noRecipesMsg);
         return;
     }
@@ -131,4 +163,4 @@ function createReceitaCard(receita) {
     return card;
 }
 // Export functions
-export { fetchPublicReceitas, renderPubReceitasListView, renderReceitas, createReceitaCard };
+export { fetchVisibleReceitas, renderPubReceitasListView, renderReceitas, createReceitaCard };

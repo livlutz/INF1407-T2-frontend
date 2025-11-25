@@ -26,36 +26,69 @@ interface PageContext {
 }
 
 /**
- * Fetch public recipes from the backend API
+ * Fetch visible recipes from the backend API
  *
- * @returns Promise with an array of public recipes
+ * @returns Promise with an array of visible recipes
  */
-async function fetchPublicReceitas(): Promise<Receita[]> {
+async function fetchVisibleReceitas(): Promise<Receita[]> {
+
+    const token = localStorage.getItem('token');
+
     try {
-        const response = await fetch(backendAddress + "receitas/");
+        // First, try to get user ID from token-auth
+        const authResponse = await fetch(backendAddress + 'accounts/token-auth/', {
+            method: 'GET',
+            headers: {
+                'Authorization': tokenKeyword + token
+            }
+        });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        var userId: any = null;
+        var response: any = null;
+        var receitas: Receita[] = [];
+
+        if (authResponse.ok) {
+            const authData = await authResponse.json();
+            userId = authData.id || authData.user_id;
+
+            if (userId) {
+                // If user ID is found, fetch recipes visible to this user
+                // including public and user's private recipes
+                 response = await fetch(backendAddress + `"receitas/"${userId}/`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': tokenKeyword + token,
+                        'Content-Type': 'application/json'
+                    }
+                })
+            }
         }
-
-        const receitas: Receita[] = await response.json();
-
+        if (!userId) {
+            // If no user ID, fetch only public recipes
+            response = await fetch(backendAddress + "receitas/");
+        }
+        if (response) {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            receitas = await response.json();
+        }
         return receitas;
-    }
+        ;
 
-    catch (error) {
-        console.error('Error fetching public recipes:', error);
+    } catch (error) {
+        console.error('Error fetching recipes:', error);
         return [];
     }
 }
 
 /**
- * Render public recipes list view with fetched data
+ * Render visible recipes list view with fetched data
  * 
  * @returns Promise that resolves when rendering is complete
  */
 async function renderPubReceitasListView(): Promise<void> {
-    const receitas = await fetchPublicReceitas();
+    const receitas = await fetchVisibleReceitas();
 
     const contexto: PageContext = {
         pubReceitas: receitas,
@@ -94,7 +127,7 @@ function renderReceitas(contexto: PageContext): void {
     // Check if there are recipes
     if (contexto.pubReceitas.length === 0) {
         const noRecipesMsg = document.createElement('p');
-        noRecipesMsg.textContent = 'Nenhuma receita pública disponível.';
+        noRecipesMsg.textContent = 'Nenhuma receita visível disponível.';
         container.appendChild(noRecipesMsg);
         return;
     }
@@ -172,7 +205,7 @@ function createReceitaCard(receita: Receita): HTMLElement {
 export {
     Receita,
     PageContext,
-    fetchPublicReceitas,
+    fetchVisibleReceitas,
     renderPubReceitasListView,
     renderReceitas,
     createReceitaCard
