@@ -173,6 +173,15 @@ function createReceitaCard(receita: Receita): HTMLElement {
     const card = document.createElement('div');
     card.className = 'receita-card';
 
+    const isPrivate = receita.visibilidade === 'priv';
+
+    if (isPrivate) {
+        const badge = document.createElement('span');
+        badge.className = 'visibility-badge visibility-private';
+        badge.textContent = '🔒 Privada';
+        card.appendChild(badge);
+    }
+
     // Always add image - use placeholder if not available
     const img = document.createElement('img');
     if (receita.foto_da_receita) {
