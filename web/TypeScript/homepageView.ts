@@ -123,6 +123,26 @@ function renderReceitas(contexto: PageContext): void {
     pageTitle.textContent = contexto.tituloPagina;
     container.appendChild(pageTitle);
 
+        
+    // Create the "Nova Receita" button
+    const criarBtn = document.createElement('button');
+    criarBtn.textContent = "➕ Nova Receita";
+    criarBtn.className = "btn-criar-receita";
+    criarBtn.style.display = "block";
+    criarBtn.style.margin = "10px auto";
+
+    criarBtn.addEventListener("click", () => {
+        const token = localStorage.getItem("token");
+
+        if (token) {
+            window.location.href = "criarReceita.html";
+        } else {
+            window.location.href = "login.html";
+        }
+    });
+
+    container.appendChild(criarBtn);
+
     // Check if there are recipes
     if (contexto.pubReceitas.length === 0) {
         const noRecipesMsg = document.createElement('p');
