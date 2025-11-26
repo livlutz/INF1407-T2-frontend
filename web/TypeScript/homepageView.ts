@@ -54,11 +54,10 @@ async function fetchVisibleReceitas(): Promise<Receita[]> {
             if (userId) {
                 // If user ID is found, fetch recipes visible to this user
                 // including public and user's private recipes
-                 response = await fetch(backendAddress + `receitas/${userId}/`, {
+                 response = await fetch(backendAddress + `receitas/`, {
                     method: 'GET',
                     headers: {
                         'Authorization': tokenKeyword + token,
-                        'Content-Type': 'application/json'
                     }
                 })
             }
