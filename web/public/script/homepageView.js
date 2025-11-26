@@ -150,12 +150,12 @@ function createReceitaCard(receita) {
         img.src = receita.foto_da_receita;
     }
     else {
-        img.src = 'https://via.placeholder.com/400x300?text=Sem+Imagem';
+        img.src = 'https://dummyimage.com/400x300/ffe0b2/232323&text=Sem+imagem';
     }
     img.alt = receita.titulo;
     img.className = 'receita-img';
     img.onerror = function () {
-        this.src = 'https://via.placeholder.com/400x300?text=Sem+Imagem';
+        this.src = 'https://dummyimage.com/400x300/ffe0b2/232323&text=Sem+imagem';
     };
     card.appendChild(img);
     const titulo = document.createElement('h2');

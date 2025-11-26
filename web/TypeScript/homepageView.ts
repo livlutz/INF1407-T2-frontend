@@ -188,12 +188,12 @@ function createReceitaCard(receita: Receita): HTMLElement {
         // The serializer already returns the full URL with the request context
         img.src = receita.foto_da_receita;
     } else {
-        img.src = 'https://via.placeholder.com/400x300?text=Sem+Imagem';
+        img.src = 'https://dummyimage.com/400x300/ffe0b2/232323&text=Sem+imagem';
     }
     img.alt = receita.titulo;
     img.className = 'receita-img';
     img.onerror = function() {
-        (this as HTMLImageElement).src = 'https://via.placeholder.com/400x300?text=Sem+Imagem';
+        (this as HTMLImageElement).src = 'https://dummyimage.com/400x300/ffe0b2/232323&text=Sem+imagem';
     };
     card.appendChild(img);
 
