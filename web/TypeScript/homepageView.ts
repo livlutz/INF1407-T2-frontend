@@ -99,7 +99,7 @@ async function renderPubReceitasListView(): Promise<void> {
     document.title = contexto.tituloJanela;
 
     // Render recipes into the DOM
-    renderReceitas(contexto);
+    await renderReceitas(contexto);
 }
 
 /**
@@ -107,7 +107,7 @@ async function renderPubReceitasListView(): Promise<void> {
  *
  * @param contexto - The page context containing recipes and titles
  */
-function renderReceitas(contexto: PageContext): void {
+async function renderReceitas(contexto: PageContext): Promise<void> {
     const container = document.getElementById('receitas-container');
 
     if (!container) {
@@ -155,6 +155,7 @@ function renderReceitas(contexto: PageContext): void {
     const receitasList = document.createElement('div');
     receitasList.className = 'receitas-list';
 
+    // Create recipe cards
     contexto.pubReceitas.forEach(receita => {
         const receitaCard = createReceitaCard(receita);
         receitasList.appendChild(receitaCard);
@@ -207,10 +208,16 @@ function createReceitaCard(receita: Receita): HTMLElement {
     autor.textContent = `Por: ${receita.autor_nome}`;
     card.appendChild(autor);
 
-    // Show category
+    // Show category (prefer backend-provided label if available)
     const categoria = document.createElement('span');
     categoria.className = 'receita-categoria';
-    categoria.textContent = receita.categoria;
+    // Backend may return `categoria` as an object { value, label }.
+    const catField: any = (receita as any).categoria;
+    if (catField && typeof catField === 'object') {
+        categoria.textContent = catField.label || catField.value || receita.categoria;
+    } else {
+        categoria.textContent = (receita as any).categoria_label || receita.categoria;
+    }
     card.appendChild(categoria);
 
     const detalhes = document.createElement('div');

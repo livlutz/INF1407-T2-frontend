@@ -128,8 +128,11 @@ async function displayUserRecipes(receitas: any[]): Promise<void> {
             }
         }
 
-        // Get category label
-        const categoriaLabel = await getCategoriaLabel(receita.categoria);
+        // Get category label (backend may return categoria as object {value,label})
+        const catField: any = (receita as any).categoria;
+        const categoriaLabel = catField && typeof catField === 'object'
+            ? (catField.label || catField.value)
+            : ((receita as any).categoria_label || receita.categoria);
 
         html += `
             <div class="receita-card" onclick="window.location.href='receita.html?id=${receita.id}'">

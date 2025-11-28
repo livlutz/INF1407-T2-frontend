@@ -135,7 +135,13 @@ async function renderReceitaDetalhes(receita: Receita): Promise<void> {
 
     const categoria = document.createElement('span');
     categoria.className = 'receita-info-item';
-    categoria.textContent = await getCategoriaLabel(receita.categoria);
+    // Backend may return `categoria` as an object { value, label }.
+    const catField: any = (receita as any).categoria;
+    if (catField && typeof catField === 'object') {
+        categoria.textContent = catField.label || catField.value || receita.categoria;
+    } else {
+        categoria.textContent = (receita as any).categoria_label || receita.categoria;
+    }
     itens.appendChild(categoria);
 
     const tempo = document.createElement('span');

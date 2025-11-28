@@ -75,7 +75,7 @@ function renderPubReceitasListView() {
         // Update the page title
         document.title = contexto.tituloJanela;
         // Render recipes into the DOM
-        renderReceitas(contexto);
+        yield renderReceitas(contexto);
     });
 }
 /**
@@ -84,48 +84,51 @@ function renderPubReceitasListView() {
  * @param contexto - The page context containing recipes and titles
  */
 function renderReceitas(contexto) {
-    const container = document.getElementById('receitas-container');
-    if (!container) {
-        console.error('Container element not found');
-        return;
-    }
-    // Clear existing content
-    container.innerHTML = '';
-    // Add page title
-    const pageTitle = document.createElement('h1');
-    pageTitle.textContent = contexto.tituloPagina;
-    container.appendChild(pageTitle);
-    // Create the "Nova Receita" button
-    const criarBtn = document.createElement('button');
-    criarBtn.textContent = "➕ Nova Receita";
-    criarBtn.className = "btn-criar-receita";
-    criarBtn.style.display = "block";
-    criarBtn.style.margin = "10px auto";
-    criarBtn.addEventListener("click", () => {
-        const token = localStorage.getItem("token");
-        if (token) {
-            window.location.href = "criarReceita.html";
+    return __awaiter(this, void 0, void 0, function* () {
+        const container = document.getElementById('receitas-container');
+        if (!container) {
+            console.error('Container element not found');
+            return;
         }
-        else {
-            window.location.href = "login.html";
+        // Clear existing content
+        container.innerHTML = '';
+        // Add page title
+        const pageTitle = document.createElement('h1');
+        pageTitle.textContent = contexto.tituloPagina;
+        container.appendChild(pageTitle);
+        // Create the "Nova Receita" button
+        const criarBtn = document.createElement('button');
+        criarBtn.textContent = "➕ Nova Receita";
+        criarBtn.className = "btn-criar-receita";
+        criarBtn.style.display = "block";
+        criarBtn.style.margin = "10px auto";
+        criarBtn.addEventListener("click", () => {
+            const token = localStorage.getItem("token");
+            if (token) {
+                window.location.href = "criarReceita.html";
+            }
+            else {
+                window.location.href = "login.html";
+            }
+        });
+        container.appendChild(criarBtn);
+        // Check if there are recipes
+        if (contexto.pubReceitas.length === 0) {
+            const noRecipesMsg = document.createElement('p');
+            noRecipesMsg.textContent = 'Nenhuma receita visível disponível.';
+            container.appendChild(noRecipesMsg);
+            return;
         }
+        // Create the recipes list
+        const receitasList = document.createElement('div');
+        receitasList.className = 'receitas-list';
+        // Create recipe cards
+        contexto.pubReceitas.forEach(receita => {
+            const receitaCard = createReceitaCard(receita);
+            receitasList.appendChild(receitaCard);
+        });
+        container.appendChild(receitasList);
     });
-    container.appendChild(criarBtn);
-    // Check if there are recipes
-    if (contexto.pubReceitas.length === 0) {
-        const noRecipesMsg = document.createElement('p');
-        noRecipesMsg.textContent = 'Nenhuma receita visível disponível.';
-        container.appendChild(noRecipesMsg);
-        return;
-    }
-    // Create the recipes list
-    const receitasList = document.createElement('div');
-    receitasList.className = 'receitas-list';
-    contexto.pubReceitas.forEach(receita => {
-        const receitaCard = createReceitaCard(receita);
-        receitasList.appendChild(receitaCard);
-    });
-    container.appendChild(receitasList);
 }
 /**
  * Create a recipe card element
@@ -166,10 +169,17 @@ function createReceitaCard(receita) {
     autor.className = 'receita-autor';
     autor.textContent = `Por: ${receita.autor_nome}`;
     card.appendChild(autor);
-    // Show category
+    // Show category (prefer backend-provided label if available)
     const categoria = document.createElement('span');
     categoria.className = 'receita-categoria';
-    categoria.textContent = receita.categoria;
+    // Backend may return `categoria` as an object { value, label }.
+    const catField = receita.categoria;
+    if (catField && typeof catField === 'object') {
+        categoria.textContent = catField.label || catField.value || receita.categoria;
+    }
+    else {
+        categoria.textContent = receita.categoria_label || receita.categoria;
+    }
     card.appendChild(categoria);
     const detalhes = document.createElement('div');
     detalhes.className = 'receita-detalhes';

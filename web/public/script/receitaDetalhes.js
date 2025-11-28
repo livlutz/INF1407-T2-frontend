@@ -57,180 +57,189 @@ function fetchReceita(id) {
  * @param receita - The recipe object to render
  */
 function renderReceitaDetalhes(receita) {
-    const container = document.getElementById('receita-detalhes-container');
-    if (!container) {
-        console.error('Container element not found');
-        return;
-    }
-    container.className = 'ver-receita-section';
-    // Check if user is logged in
-    const token = localStorage.getItem('token');
-    // Clear existing content
-    container.innerHTML = '';
-    // Create the main card
-    const card = document.createElement('div');
-    card.className = 'ver-receita-card';
-    // Add image if available
-    if (receita.foto_da_receita) {
-        console.log('Image URL from backend:', receita.foto_da_receita);
-        const imgWrap = document.createElement('div');
-        imgWrap.className = 'ver-receita-img-wrap';
-        const img = document.createElement('img');
-        // Backend now returns the full URL
-        img.src = receita.foto_da_receita;
-        img.alt = receita.titulo;
-        img.className = 'ver-receita-img';
-        img.onerror = function () {
-            console.error('Failed to load image:', receita.foto_da_receita);
-            this.src = 'https://via.placeholder.com/400x300?text=Sem+Imagem';
-        };
-        img.onload = function () {
-            console.log('Image loaded successfully:', receita.foto_da_receita);
-        };
-        imgWrap.appendChild(img);
-        card.appendChild(imgWrap);
-    }
-    else {
-        console.log('No image URL provided for this recipe');
-    }
-    // Content section
-    const content = document.createElement('div');
-    content.className = 'ver-receita-content';
-    // Title
-    const titulo = document.createElement('h1');
-    titulo.className = 'ver-receita-title';
-    titulo.textContent = receita.titulo;
-    content.appendChild(titulo);
-    // Meta information
-    const meta = document.createElement('div');
-    meta.className = 'ver-receita-meta';
-    const autor = document.createElement('span');
-    autor.className = 'ver-receita-author';
-    autor.textContent = `👨‍🍳 ${receita.autor_nome}`;
-    meta.appendChild(autor);
-    const itens = document.createElement('div');
-    itens.className = 'ver-receita-info';
-    const categoria = document.createElement('span');
-    categoria.className = 'receita-info-item';
-    categoria.textContent = receita.categoria;
-    itens.appendChild(categoria);
-    const tempo = document.createElement('span');
-    tempo.className = 'receita-info-item';
-    tempo.textContent = `⏱️ ${receita.tempo_de_preparo} min`;
-    itens.appendChild(tempo);
-    const porcoes = document.createElement('span');
-    porcoes.className = 'receita-info-item';
-    porcoes.textContent = `🍽️ ${receita.porcoes} porções`;
-    itens.appendChild(porcoes);
-    meta.appendChild(itens);
-    content.appendChild(meta);
-    // Ingredientes section
-    const infos = document.createElement('div');
-    infos.className = 'ver-receita-section';
-    const ingredientesTitle = document.createElement('h2');
-    ingredientesTitle.className = 'ver-receita-title2';
-    ingredientesTitle.textContent = 'Ingredientes';
-    infos.appendChild(ingredientesTitle);
-    const ingredientesList = document.createElement('ul');
-    ingredientesList.className = 'receita-ingredientes-list';
-    // Split ingredients by newlines and create list items
-    const ingredientesArray = receita.ingredientes.split(/\r?\n/).filter(line => line.trim());
-    ingredientesArray.forEach(ingrediente => {
-        const li = document.createElement('li');
-        li.textContent = ingrediente;
-        ingredientesList.appendChild(li);
-    });
-    infos.appendChild(ingredientesList);
-    content.appendChild(infos);
-    // Modo de preparo section
-    const infos2 = document.createElement('div');
-    infos2.className = 'ver-receita-section';
-    const preparoTitle = document.createElement('h2');
-    preparoTitle.className = 'ver-receita-title2';
-    preparoTitle.textContent = 'Modo de Preparo';
-    infos2.appendChild(preparoTitle);
-    const preparo = document.createElement('div');
-    preparo.className = 'receita-instrucoes';
-    // Preserve line breaks in the preparation text
-    preparo.innerHTML = receita.modo_de_preparo.replace(/\r?\n/g, '<br>');
-    infos2.appendChild(preparo);
-    content.appendChild(infos2);
-    // Actions buttons
-    if (token) {
-        // Determine if the logged user is the author (prefer userId, fallback to username)
-        let isAuthor = false;
-        const loggedUserId = localStorage.getItem('userId');
-        if (loggedUserId && receita.autor !== undefined && receita.autor !== null) {
-            try {
-                if (parseInt(loggedUserId, 10) === receita.autor) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const container = document.getElementById('receita-detalhes-container');
+        if (!container) {
+            console.error('Container element not found');
+            return;
+        }
+        container.className = 'ver-receita-section';
+        // Check if user is logged in
+        const token = localStorage.getItem('token');
+        // Clear existing content
+        container.innerHTML = '';
+        // Create the main card
+        const card = document.createElement('div');
+        card.className = 'ver-receita-card';
+        // Add image if available
+        if (receita.foto_da_receita) {
+            console.log('Image URL from backend:', receita.foto_da_receita);
+            const imgWrap = document.createElement('div');
+            imgWrap.className = 'ver-receita-img-wrap';
+            const img = document.createElement('img');
+            // Backend now returns the full URL
+            img.src = receita.foto_da_receita;
+            img.alt = receita.titulo;
+            img.className = 'ver-receita-img';
+            img.onerror = function () {
+                console.error('Failed to load image:', receita.foto_da_receita);
+                this.src = 'https://via.placeholder.com/400x300?text=Sem+Imagem';
+            };
+            img.onload = function () {
+                console.log('Image loaded successfully:', receita.foto_da_receita);
+            };
+            imgWrap.appendChild(img);
+            card.appendChild(imgWrap);
+        }
+        else {
+            console.log('No image URL provided for this recipe');
+        }
+        // Content section
+        const content = document.createElement('div');
+        content.className = 'ver-receita-content';
+        // Title
+        const titulo = document.createElement('h1');
+        titulo.className = 'ver-receita-title';
+        titulo.textContent = receita.titulo;
+        content.appendChild(titulo);
+        // Meta information
+        const meta = document.createElement('div');
+        meta.className = 'ver-receita-meta';
+        const autor = document.createElement('span');
+        autor.className = 'ver-receita-author';
+        autor.textContent = `👨‍🍳 ${receita.autor_nome}`;
+        meta.appendChild(autor);
+        const itens = document.createElement('div');
+        itens.className = 'ver-receita-info';
+        const categoria = document.createElement('span');
+        categoria.className = 'receita-info-item';
+        // Backend may return `categoria` as an object { value, label }.
+        const catField = receita.categoria;
+        if (catField && typeof catField === 'object') {
+            categoria.textContent = catField.label || catField.value || receita.categoria;
+        }
+        else {
+            categoria.textContent = receita.categoria_label || receita.categoria;
+        }
+        itens.appendChild(categoria);
+        const tempo = document.createElement('span');
+        tempo.className = 'receita-info-item';
+        tempo.textContent = `⏱️ ${receita.tempo_de_preparo} min`;
+        itens.appendChild(tempo);
+        const porcoes = document.createElement('span');
+        porcoes.className = 'receita-info-item';
+        porcoes.textContent = `🍽️ ${receita.porcoes} porções`;
+        itens.appendChild(porcoes);
+        meta.appendChild(itens);
+        content.appendChild(meta);
+        // Ingredientes section
+        const infos = document.createElement('div');
+        infos.className = 'ver-receita-section';
+        const ingredientesTitle = document.createElement('h2');
+        ingredientesTitle.className = 'ver-receita-title2';
+        ingredientesTitle.textContent = 'Ingredientes';
+        infos.appendChild(ingredientesTitle);
+        const ingredientesList = document.createElement('ul');
+        ingredientesList.className = 'receita-ingredientes-list';
+        // Split ingredients by newlines and create list items
+        const ingredientesArray = receita.ingredientes.split(/\r?\n/).filter(line => line.trim());
+        ingredientesArray.forEach(ingrediente => {
+            const li = document.createElement('li');
+            li.textContent = ingrediente;
+            ingredientesList.appendChild(li);
+        });
+        infos.appendChild(ingredientesList);
+        content.appendChild(infos);
+        // Modo de preparo section
+        const infos2 = document.createElement('div');
+        infos2.className = 'ver-receita-section';
+        const preparoTitle = document.createElement('h2');
+        preparoTitle.className = 'ver-receita-title2';
+        preparoTitle.textContent = 'Modo de Preparo';
+        infos2.appendChild(preparoTitle);
+        const preparo = document.createElement('div');
+        preparo.className = 'receita-instrucoes';
+        // Preserve line breaks in the preparation text
+        preparo.innerHTML = receita.modo_de_preparo.replace(/\r?\n/g, '<br>');
+        infos2.appendChild(preparo);
+        content.appendChild(infos2);
+        // Actions buttons
+        if (token) {
+            // Determine if the logged user is the author (prefer userId, fallback to username)
+            let isAuthor = false;
+            const loggedUserId = localStorage.getItem('userId');
+            if (loggedUserId && receita.autor !== undefined && receita.autor !== null) {
+                try {
+                    if (parseInt(loggedUserId, 10) === receita.autor) {
+                        isAuthor = true;
+                    }
+                }
+                catch (e) {
+                    // ignore parse errors
+                }
+            }
+            if (!isAuthor) {
+                const loggedUsername = localStorage.getItem('username');
+                if (loggedUsername && loggedUsername === receita.autor_nome) {
                     isAuthor = true;
                 }
             }
-            catch (e) {
-                // ignore parse errors
+            if (isAuthor) {
+                const actionsDiv = document.createElement('div');
+                actionsDiv.style.display = 'flex';
+                actionsDiv.style.gap = '1rem';
+                actionsDiv.style.marginTop = '1.5rem';
+                // Edit button
+                const editBtn = document.createElement('button');
+                editBtn.className = 'modern-btn';
+                editBtn.textContent = '✏️ Edit';
+                editBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    window.location.href = `editarReceita.html?id=${receita.id}`;
+                });
+                actionsDiv.appendChild(editBtn);
+                // Delete button
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'modern-btn';
+                deleteBtn.textContent = '🗑️ Delete';
+                deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    window.location.href = `deletarReceita.html?id=${receita.id}`;
+                });
+                actionsDiv.appendChild(deleteBtn);
+                content.appendChild(actionsDiv);
             }
         }
-        if (!isAuthor) {
-            const loggedUsername = localStorage.getItem('username');
-            if (loggedUsername && loggedUsername === receita.autor_nome) {
-                isAuthor = true;
-            }
-        }
-        if (isAuthor) {
-            const actionsDiv = document.createElement('div');
-            actionsDiv.style.display = 'flex';
-            actionsDiv.style.gap = '1rem';
-            actionsDiv.style.marginTop = '1.5rem';
-            // Edit button
-            const editBtn = document.createElement('button');
-            editBtn.className = 'modern-btn';
-            editBtn.textContent = '✏️ Edit';
-            editBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                window.location.href = `editarReceita.html?id=${receita.id}`;
-            });
-            actionsDiv.appendChild(editBtn);
-            // Delete button
-            const deleteBtn = document.createElement('button');
-            deleteBtn.className = 'modern-btn';
-            deleteBtn.textContent = '🗑️ Delete';
-            deleteBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                window.location.href = `deletarReceita.html?id=${receita.id}`;
-            });
-            actionsDiv.appendChild(deleteBtn);
-            content.appendChild(actionsDiv);
-        }
-    }
-    // Navigation buttons
-    const buttonsDiv = document.createElement('div');
-    buttonsDiv.style.display = 'flex';
-    buttonsDiv.style.gap = '1rem';
-    buttonsDiv.style.marginTop = '2rem';
-    buttonsDiv.style.flexWrap = 'wrap';
-    // Back to Homepage button
-    const backBtn = document.createElement('button');
-    backBtn.className = 'modern-btn';
-    backBtn.textContent = '← Voltar para Homepage';
-    backBtn.addEventListener('click', () => {
-        window.location.href = 'index.html';
-    });
-    buttonsDiv.appendChild(backBtn);
-    // Back to My Recipes button (only show if user is logged in)
-    if (token) {
-        const myRecipesBtn = document.createElement('button');
-        myRecipesBtn.className = 'modern-btn';
-        myRecipesBtn.textContent = '📖 Minhas Receitas';
-        myRecipesBtn.addEventListener('click', () => {
-            window.location.href = 'minhasReceitas.html';
+        // Navigation buttons
+        const buttonsDiv = document.createElement('div');
+        buttonsDiv.style.display = 'flex';
+        buttonsDiv.style.gap = '1rem';
+        buttonsDiv.style.marginTop = '2rem';
+        buttonsDiv.style.flexWrap = 'wrap';
+        // Back to Homepage button
+        const backBtn = document.createElement('button');
+        backBtn.className = 'modern-btn';
+        backBtn.textContent = '← Voltar para Homepage';
+        backBtn.addEventListener('click', () => {
+            window.location.href = 'index.html';
         });
-        buttonsDiv.appendChild(myRecipesBtn);
-    }
-    content.appendChild(buttonsDiv);
-    card.appendChild(content);
-    container.appendChild(card);
-    // Update page title
-    document.title = `${receita.titulo} - Receita`;
+        buttonsDiv.appendChild(backBtn);
+        // Back to My Recipes button (only show if user is logged in)
+        if (token) {
+            const myRecipesBtn = document.createElement('button');
+            myRecipesBtn.className = 'modern-btn';
+            myRecipesBtn.textContent = '📖 Minhas Receitas';
+            myRecipesBtn.addEventListener('click', () => {
+                window.location.href = 'minhasReceitas.html';
+            });
+            buttonsDiv.appendChild(myRecipesBtn);
+        }
+        content.appendChild(buttonsDiv);
+        card.appendChild(content);
+        container.appendChild(card);
+        // Update page title
+        document.title = `${receita.titulo} - Receita`;
+    });
 }
 /**
  * Displays an error message
@@ -238,7 +247,7 @@ function renderReceitaDetalhes(receita) {
  * @param message - The error message to display
  */
 function showError(message) {
-    const container = document.getElementById('ver-receita-section');
+    const container = document.getElementById('receita-detalhes-container');
     if (!container)
         return;
     container.innerHTML = `
@@ -260,14 +269,15 @@ function init() {
     return __awaiter(this, void 0, void 0, function* () {
         const receitaId = getRecipeIdFromUrl();
         if (!receitaId) {
-           const container = document.getElementById('receita-detalhes-container');
-      }
+            showError('ID da receita não fornecido.');
+            return;
+        }
         const receita = yield fetchReceita(receitaId);
         if (!receita) {
             showError('Receita não encontrada.');
             return;
         }
-        renderReceitaDetalhes(receita);
+        yield renderReceitaDetalhes(receita);
     });
 }
 // Initialize when DOM is loaded

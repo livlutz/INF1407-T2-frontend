@@ -129,8 +129,11 @@ function displayUserRecipes(receitas) {
                     imageUrl = cleanBackend + cleanPath;
                 }
             }
-            // Get category label
-            const categoriaLabel = yield getCategoriaLabel(receita.categoria);
+            // Get category label (backend may return categoria as object {value,label})
+            const catField = receita.categoria;
+            const categoriaLabel = catField && typeof catField === 'object'
+                ? (catField.label || catField.value)
+                : (receita.categoria_label || receita.categoria);
             html += `
             <div class="receita-card" onclick="window.location.href='receita.html?id=${receita.id}'">
                 <span class="visibility-badge ${visibilityClass}">${visibilityBadge}</span>
