@@ -26,6 +26,18 @@ Receitinhas da Vovó é uma plataforma web completa para compartilhamento de rec
 
 Disponível no repositório: https://github.com/livlutz/INF1407-T2-backend
 
+## Deploy
+
+O deploy foi feito com dois sites separados através do **PythonAnywhere**
+
+### Links
+
+https://livialuizafront.pythonanywhere.com/
+
+https://livialuizaback.pythonanywhere.com/
+
+## Avaliação do trabalho
+
 ### 🌟 O que funcionou
 
 #### Sistema de Usuários
