@@ -70,14 +70,14 @@ window.addEventListener('load', () => {
  */
 export function updateHeaderAuthentication() {
     const username = localStorage.getItem('username');
-    const authToken = localStorage.getItem('authToken');
+    const tokenValue = localStorage.getItem('token');
     const identificacaoElement = document.getElementById('identificacao');
     const loggedElement = document.getElementById('logged');
     const unloggedElement = document.getElementById('unlogged');
     if (!identificacaoElement || !loggedElement || !unloggedElement) {
         return; // Elements don't exist on this page
     }
-    if (username && authToken) {
+    if (username && tokenValue) {
         // User is logged in
         identificacaoElement.textContent = username;
         loggedElement.classList.remove('invisivel');
@@ -100,7 +100,7 @@ export function updateHeaderAuthentication() {
  * @return boolean indicating authentication status
  */
 export function isAuthenticated() {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('token');
     return token !== null;
 }
 /**
@@ -115,7 +115,7 @@ export function getCurrentUsername() {
  * Logout user by clearing authentication data
  */
 export function logout() {
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('token');
     localStorage.removeItem('username');
     window.location.href = 'login.html';
 }

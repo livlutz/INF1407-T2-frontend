@@ -1,4 +1,3 @@
-
 /**
  * Interface representing a Recipe object
  */
@@ -67,7 +66,7 @@ async function fetchReceita(id: number): Promise<Receita | null> {
  * 
  * @param receita - The recipe object to render
  */
-function renderReceitaDetalhes(receita: Receita): void {
+async function renderReceitaDetalhes(receita: Receita): Promise<void> {
     const container = document.getElementById('receita-detalhes-container');
 
     if (!container) {
@@ -136,7 +135,7 @@ function renderReceitaDetalhes(receita: Receita): void {
 
     const categoria = document.createElement('span');
     categoria.className = 'receita-info-item';
-    categoria.textContent = receita.categoria;
+    categoria.textContent = await getCategoriaLabel(receita.categoria);
     itens.appendChild(categoria);
 
     const tempo = document.createElement('span');
@@ -284,7 +283,7 @@ function renderReceitaDetalhes(receita: Receita): void {
  * @param message - The error message to display
  */
 function showError(message: string): void {
-    const container = document.getElementById('ver-receita-section');
+    const container = document.getElementById('receita-detalhes-container');
     if (!container) return;
 
     container.innerHTML = `
@@ -318,7 +317,7 @@ async function init(): Promise<void> {
         return;
     }
 
-    renderReceitaDetalhes(receita);
+    await renderReceitaDetalhes(receita);
 }
 
 // Initialize when DOM is loaded

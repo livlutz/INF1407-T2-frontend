@@ -37,7 +37,8 @@ function loadUserRecipes() {
                     window.location.href = 'login.html';
                     return;
                 }
-                throw new Error('Erro ao validar token');
+                const text = yield authResponse.text().catch(() => '');
+                throw new Error(`Erro ao validar token (status ${authResponse.status}): ${text}`);
             }
             const authData = yield authResponse.json();
             const userId = authData.id || authData.user_id;
@@ -58,17 +59,20 @@ function loadUserRecipes() {
                     window.location.href = 'login.html';
                     return;
                 }
-                throw new Error('Erro ao carregar receitas');
+                const text = yield response.text().catch(() => '');
+                throw new Error(`Erro ao carregar receitas (status ${response.status}): ${text}`);
             }
             const receitas = yield response.json();
-            displayUserRecipes(receitas);
+            yield displayUserRecipes(receitas);
         }
         catch (error) {
             console.error('Erro ao carregar receitas:', error);
+            const msg = error instanceof Error ? error.message : String(error);
             receitasContainer.innerHTML = `
             <div class="error-message">
                 <h2>Erro ao carregar receitas</h2>
-                <p>Não foi possível carregar suas receitas. Tente novamente mais tarde.</p>
+                <p>${msg}</p>
+                <p>Tente recarregar a página ou faça logout e login novamente.</p>
             </div>
         `;
         }
@@ -80,11 +84,12 @@ function loadUserRecipes() {
  * @param receitas - Array of recipe objects
  */
 function displayUserRecipes(receitas) {
-    const receitasContainer = document.getElementById('receitas-container');
-    if (!receitasContainer)
-        return;
-    if (receitas.length === 0) {
-        receitasContainer.innerHTML = `
+    return __awaiter(this, void 0, void 0, function* () {
+        const receitasContainer = document.getElementById('receitas-container');
+        if (!receitasContainer)
+            return;
+        if (receitas.length === 0) {
+            receitasContainer.innerHTML = `
             <div class="no-recipes">
                 <h2>📝 Você ainda não criou nenhuma receita</h2>
                 <p>Comece a compartilhar suas receitas deliciosas com a comunidade!</p>
@@ -93,9 +98,9 @@ function displayUserRecipes(receitas) {
                 </button>
             </div>
         `;
-        return;
-    }
-    let html = `
+            return;
+        }
+        let html = `
         <div class="minhas-receitas-header">
             <h1>🍳 Minhas Receitas</h1>
             <p class="receitas-count">Você tem ${receitas.length} receita${receitas.length !== 1 ? 's' : ''}</p>
@@ -105,26 +110,28 @@ function displayUserRecipes(receitas) {
         </div>
         <div class="receitas-list">
     `;
-    for (let i = 0; i < receitas.length; i++) {
-        const receita = receitas[i];
-        const isPublic = receita.visibilidade === 'pub' || receita.visibilidade === 'Pub';
-        const visibilityBadge = isPublic ? '🌐 Pública' : '🔒 Privada';
-        const visibilityClass = isPublic ? 'visibility-public' : 'visibility-private';
-        // Handle image URL - check if it's absolute or relative
-        let imageUrl = 'https://via.placeholder.com/400x300?text=Sem+Imagem';
-        if (receita.foto_da_receita) {
-            if (receita.foto_da_receita.startsWith('http://') || receita.foto_da_receita.startsWith('https://')) {
-                // Already absolute URL
-                imageUrl = receita.foto_da_receita;
+        for (let i = 0; i < receitas.length; i++) {
+            const receita = receitas[i];
+            const isPublic = receita.visibilidade === 'pub' || receita.visibilidade === 'Pub';
+            const visibilityBadge = isPublic ? '🌐 Pública' : '🔒 Privada';
+            const visibilityClass = isPublic ? 'visibility-public' : 'visibility-private';
+            // Handle image URL - check if it's absolute or relative
+            let imageUrl = 'https://via.placeholder.com/400x300?text=Sem+Imagem';
+            if (receita.foto_da_receita) {
+                if (receita.foto_da_receita.startsWith('http://') || receita.foto_da_receita.startsWith('https://')) {
+                    // Already absolute URL
+                    imageUrl = receita.foto_da_receita;
+                }
+                else {
+                    // Relative URL - prepend backend address
+                    const cleanBackend = backendAddress.replace(/\/$/, '');
+                    const cleanPath = receita.foto_da_receita.startsWith('/') ? receita.foto_da_receita : '/' + receita.foto_da_receita;
+                    imageUrl = cleanBackend + cleanPath;
+                }
             }
-            else {
-                // Relative URL - prepend backend address
-                const cleanBackend = backendAddress.replace(/\/$/, '');
-                const cleanPath = receita.foto_da_receita.startsWith('/') ? receita.foto_da_receita : '/' + receita.foto_da_receita;
-                imageUrl = cleanBackend + cleanPath;
-            }
-        }
-        html += `
+            // Get category label
+            const categoriaLabel = yield getCategoriaLabel(receita.categoria);
+            html += `
             <div class="receita-card" onclick="window.location.href='receita.html?id=${receita.id}'">
                 <span class="visibility-badge ${visibilityClass}">${visibilityBadge}</span>
                 <img src="${imageUrl}"
@@ -132,7 +139,7 @@ function displayUserRecipes(receitas) {
                      class="receita-img"
                      onerror="this.src='https://via.placeholder.com/400x300?text=Sem+Imagem'">
                 <h2>${receita.titulo}</h2>
-                <span class="receita-categoria">📁 ${receita.categoria}</span>
+                <span class="receita-categoria">📁 ${categoriaLabel}</span>
                 <div class="receita-detalhes">
                     <span>⏱️ ${receita.tempo_de_preparo} min</span>
                     <span>👥 ${receita.porcoes} porções</span>
@@ -147,9 +154,10 @@ function displayUserRecipes(receitas) {
                 </div>
             </div>
         `;
-    }
-    html += '</div>';
-    receitasContainer.innerHTML = html;
+        }
+        html += '</div>';
+        receitasContainer.innerHTML = html;
+    });
 }
 /**
  * Edit recipe

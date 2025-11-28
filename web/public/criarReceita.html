@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="script/constantes.js"></script>
     <script src="script/setFavicon.js"></script>
+    <script src="script/categorias.js"></script>
     <script src="script/accounts/criarReceitaView.js"></script>
 </head>
 <body>
@@ -25,7 +26,9 @@
 
             <div class="form-group">
                 <label for="categoria">Categoria *</label>
-                <input type="text" id="categoria" required maxlength="100" placeholder="Ex: Sobremesa, Prato Principal, etc.">
+                <select id="categoria" required>
+                    <option value="">Carregando categorias...</option>
+                </select>
             </div>
 
             <div class="form-row">

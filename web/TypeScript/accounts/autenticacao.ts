@@ -78,7 +78,7 @@ window.addEventListener('load', () => {
  */
 export function updateHeaderAuthentication(): void {
     const username = localStorage.getItem('username');
-    const authToken = localStorage.getItem('authToken');
+    const tokenValue = localStorage.getItem('token');
 
     const identificacaoElement = document.getElementById('identificacao');
     const loggedElement = document.getElementById('logged');
@@ -88,7 +88,7 @@ export function updateHeaderAuthentication(): void {
         return; // Elements don't exist on this page
     }
 
-    if (username && authToken) {
+    if (username && tokenValue) {
         // User is logged in
         identificacaoElement.textContent = username;
         loggedElement.classList.remove('invisivel');
@@ -111,7 +111,7 @@ export function updateHeaderAuthentication(): void {
  * @return boolean indicating authentication status
  */
 export function isAuthenticated(): boolean {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('token');
     return token !== null;
 }
 
@@ -128,7 +128,7 @@ export function getCurrentUsername(): string | null {
  * Logout user by clearing authentication data
  */
 export function logout(): void {
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('token');
     localStorage.removeItem('username');
     window.location.href = 'login.html';
 }

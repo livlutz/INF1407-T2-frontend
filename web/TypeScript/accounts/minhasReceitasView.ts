@@ -29,7 +29,8 @@ async function loadUserRecipes(): Promise<void> {
                 window.location.href = 'login.html';
                 return;
             }
-            throw new Error('Erro ao validar token');
+            const text = await authResponse.text().catch(() => '');
+            throw new Error(`Erro ao validar token (status ${authResponse.status}): ${text}`);
         }
 
         const authData = await authResponse.json();
@@ -54,18 +55,21 @@ async function loadUserRecipes(): Promise<void> {
                 window.location.href = 'login.html';
                 return;
             }
-            throw new Error('Erro ao carregar receitas');
+            const text = await response.text().catch(() => '');
+            throw new Error(`Erro ao carregar receitas (status ${response.status}): ${text}`);
         }
 
         const receitas = await response.json();
-        displayUserRecipes(receitas);
+        await displayUserRecipes(receitas);
 
     } catch (error) {
         console.error('Erro ao carregar receitas:', error);
+        const msg = error instanceof Error ? error.message : String(error);
         receitasContainer.innerHTML = `
             <div class="error-message">
                 <h2>Erro ao carregar receitas</h2>
-                <p>Não foi possível carregar suas receitas. Tente novamente mais tarde.</p>
+                <p>${msg}</p>
+                <p>Tente recarregar a página ou faça logout e login novamente.</p>
             </div>
         `;
     }
@@ -76,7 +80,7 @@ async function loadUserRecipes(): Promise<void> {
  * 
  * @param receitas - Array of recipe objects
  */
-function displayUserRecipes(receitas: any[]): void {
+async function displayUserRecipes(receitas: any[]): Promise<void> {
     const receitasContainer = document.getElementById('receitas-container');
     if (!receitasContainer) return;
 
@@ -124,6 +128,9 @@ function displayUserRecipes(receitas: any[]): void {
             }
         }
 
+        // Get category label
+        const categoriaLabel = await getCategoriaLabel(receita.categoria);
+
         html += `
             <div class="receita-card" onclick="window.location.href='receita.html?id=${receita.id}'">
                 <span class="visibility-badge ${visibilityClass}">${visibilityBadge}</span>
@@ -132,7 +139,7 @@ function displayUserRecipes(receitas: any[]): void {
                      class="receita-img"
                      onerror="this.src='https://via.placeholder.com/400x300?text=Sem+Imagem'">
                 <h2>${receita.titulo}</h2>
-                <span class="receita-categoria">📁 ${receita.categoria}</span>
+                <span class="receita-categoria">📁 ${categoriaLabel}</span>
                 <div class="receita-detalhes">
                     <span>⏱️ ${receita.tempo_de_preparo} min</span>
                     <span>👥 ${receita.porcoes} porções</span>

@@ -33,7 +33,7 @@ function createRecipe() {
         const modoDePreparo = document.getElementById('modo_de_preparo').value.trim();
         const tempoDePreparo = document.getElementById('tempo_de_preparo').value;
         const porcoes = document.getElementById('porcoes').value;
-        const categoria = document.getElementById('categoria').value.trim();
+        const categoria = document.getElementById('categoria').value;
         const visibilidade = document.getElementById('visibilidade').value;
         const fotoInput = document.getElementById('foto_da_receita');
         // Validate required fields
@@ -119,26 +119,33 @@ function cancelCreate() {
  * Initialize create recipe page
  */
 function initializeCreateRecipePage() {
-    const token = localStorage.getItem('token');
-    if (!token) {
-        window.location.href = 'login.html';
-        return;
-    }
-    // Set up event listeners
-    const submitBtn = document.getElementById('btnSubmit');
-    const cancelBtn = document.getElementById('btnCancel');
-    if (submitBtn) {
-        submitBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            createRecipe();
-        });
-    }
-    if (cancelBtn) {
-        cancelBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            cancelCreate();
-        });
-    }
+    return __awaiter(this, void 0, void 0, function* () {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = 'login.html';
+            return;
+        }
+        // Load categories into select
+        const categoriaSelect = document.getElementById('categoria');
+        if (categoriaSelect) {
+            yield populateCategoriasSelect(categoriaSelect);
+        }
+        // Set up event listeners
+        const submitBtn = document.getElementById('btnSubmit');
+        const cancelBtn = document.getElementById('btnCancel');
+        if (submitBtn) {
+            submitBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                createRecipe();
+            });
+        }
+        if (cancelBtn) {
+            cancelBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                cancelCreate();
+            });
+        }
+    });
 }
 // Run on page load
 window.addEventListener('load', initializeCreateRecipePage);

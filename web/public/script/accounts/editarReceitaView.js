@@ -85,27 +85,33 @@ function loadRecipeData() {
  * @param receita - The recipe data to populate the form with
  */
 function populateForm(receita) {
-    document.getElementById('titulo').value = receita.titulo;
-    document.getElementById('ingredientes').value = receita.ingredientes;
-    document.getElementById('modo_de_preparo').value = receita.modo_de_preparo;
-    document.getElementById('tempo_de_preparo').value = receita.tempo_de_preparo.toString();
-    document.getElementById('porcoes').value = receita.porcoes.toString();
-    document.getElementById('categoria').value = receita.categoria;
-    document.getElementById('visibilidade').value = receita.visibilidade;
-    // Show current image if exists
-    if (receita.foto_da_receita) {
-        const currentImageDiv = document.getElementById('current-image');
-        if (currentImageDiv) {
-            currentImageDiv.innerHTML = `
+    return __awaiter(this, void 0, void 0, function* () {
+        document.getElementById('titulo').value = receita.titulo;
+        document.getElementById('ingredientes').value = receita.ingredientes;
+        document.getElementById('modo_de_preparo').value = receita.modo_de_preparo;
+        document.getElementById('tempo_de_preparo').value = receita.tempo_de_preparo.toString();
+        document.getElementById('porcoes').value = receita.porcoes.toString();
+        // Populate categoria select and set the current value
+        const categoriaSelect = document.getElementById('categoria');
+        if (categoriaSelect) {
+            yield populateCategoriasSelect(categoriaSelect, receita.categoria);
+        }
+        document.getElementById('visibilidade').value = receita.visibilidade;
+        // Show current image if exists
+        if (receita.foto_da_receita) {
+            const currentImageDiv = document.getElementById('current-image');
+            if (currentImageDiv) {
+                currentImageDiv.innerHTML = `
                 <p>Imagem atual:</p>
                 <img src="${receita.foto_da_receita}"
                      alt="Foto atual"
                      style="max-width: 200px; border-radius: 0.5rem; margin-top: 0.5rem;"
                      onerror="this.style.display='none'; this.previousElementSibling.textContent='Imagem não disponível';">
             `;
-            currentImageDiv.style.display = 'block';
+                currentImageDiv.style.display = 'block';
+            }
         }
-    }
+    });
 }
 /**
  * Update recipe
@@ -135,7 +141,7 @@ function updateRecipe() {
         const modoDePreparo = document.getElementById('modo_de_preparo').value.trim();
         const tempoDePreparo = document.getElementById('tempo_de_preparo').value;
         const porcoes = document.getElementById('porcoes').value;
-        const categoria = document.getElementById('categoria').value.trim();
+        const categoria = document.getElementById('categoria').value;
         const visibilidade = document.getElementById('visibilidade').value;
         const fotoInput = document.getElementById('foto_da_receita');
         // Validate required fields
@@ -222,30 +228,32 @@ function cancelRecipeEdit() {
  * Initialize edit recipe page
  */
 function initializeEditRecipePage() {
-    const token = localStorage.getItem('token');
-    if (!token) {
-        window.location.href = 'login.html';
-        return;
-    }
-    // Load recipe data
-    loadRecipeData();
-    // Set up event listeners
-    const submitBtn = document.getElementById('btnSubmit');
-    const cancelBtn = document.getElementById('btnCancel');
-    if (submitBtn) {
-        submitBtn.className = 'modern-btn';
-        submitBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            updateRecipe();
-        });
-    }
-    if (cancelBtn) {
-        cancelBtn.className = 'cancel-modern-btn';
-        cancelBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            cancelRecipeEdit();
-        });
-    }
+    return __awaiter(this, void 0, void 0, function* () {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = 'login.html';
+            return;
+        }
+        // Load recipe data
+        yield loadRecipeData();
+        // Set up event listeners
+        const submitBtn = document.getElementById('btnSubmit');
+        const cancelBtn = document.getElementById('btnCancel');
+        if (submitBtn) {
+            submitBtn.className = 'modern-btn';
+            submitBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                updateRecipe();
+            });
+        }
+        if (cancelBtn) {
+            cancelBtn.className = 'cancel-modern-btn';
+            cancelBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                cancelRecipeEdit();
+            });
+        }
+    });
 }
 // Run on page load
 window.addEventListener('load', initializeEditRecipePage);

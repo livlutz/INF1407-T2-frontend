@@ -260,9 +260,8 @@ function init() {
     return __awaiter(this, void 0, void 0, function* () {
         const receitaId = getRecipeIdFromUrl();
         if (!receitaId) {
-            showError('ID da receita não fornecido.');
-            return;
-        }
+           const container = document.getElementById('receita-detalhes-container');
+      }
         const receita = yield fetchReceita(receitaId);
         if (!receita) {
             showError('Receita não encontrada.');

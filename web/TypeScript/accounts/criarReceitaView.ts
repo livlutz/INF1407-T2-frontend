@@ -26,7 +26,7 @@ async function createRecipe(): Promise<void> {
     const modoDePreparo = (document.getElementById('modo_de_preparo') as HTMLTextAreaElement).value.trim();
     const tempoDePreparo = (document.getElementById('tempo_de_preparo') as HTMLInputElement).value;
     const porcoes = (document.getElementById('porcoes') as HTMLInputElement).value;
-    const categoria = (document.getElementById('categoria') as HTMLInputElement).value.trim();
+    const categoria = (document.getElementById('categoria') as HTMLSelectElement).value;
     const visibilidade = (document.getElementById('visibilidade') as HTMLSelectElement).value;
     const fotoInput = document.getElementById('foto_da_receita') as HTMLInputElement;
 
@@ -127,12 +127,18 @@ function cancelCreate(): void {
 /**
  * Initialize create recipe page
  */
-function initializeCreateRecipePage(): void {
+async function initializeCreateRecipePage(): Promise<void> {
     const token = localStorage.getItem('token');
 
     if (!token) {
         window.location.href = 'login.html';
         return;
+    }
+
+    // Load categories into select
+    const categoriaSelect = document.getElementById('categoria') as HTMLSelectElement;
+    if (categoriaSelect) {
+        await populateCategoriasSelect(categoriaSelect);
     }
 
     // Set up event listeners

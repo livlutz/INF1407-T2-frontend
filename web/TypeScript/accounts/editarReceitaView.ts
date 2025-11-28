@@ -95,13 +95,19 @@ async function loadRecipeData(): Promise<void> {
  * 
  * @param receita - The recipe data to populate the form with
  */
-function populateForm(receita: ReceitaData): void {
+async function populateForm(receita: ReceitaData): Promise<void> {
     (document.getElementById('titulo') as HTMLInputElement).value = receita.titulo;
     (document.getElementById('ingredientes') as HTMLTextAreaElement).value = receita.ingredientes;
     (document.getElementById('modo_de_preparo') as HTMLTextAreaElement).value = receita.modo_de_preparo;
     (document.getElementById('tempo_de_preparo') as HTMLInputElement).value = receita.tempo_de_preparo.toString();
     (document.getElementById('porcoes') as HTMLInputElement).value = receita.porcoes.toString();
-    (document.getElementById('categoria') as HTMLInputElement).value = receita.categoria;
+    
+    // Populate categoria select and set the current value
+    const categoriaSelect = document.getElementById('categoria') as HTMLSelectElement;
+    if (categoriaSelect) {
+        await populateCategoriasSelect(categoriaSelect, receita.categoria);
+    }
+    
     (document.getElementById('visibilidade') as HTMLSelectElement).value = receita.visibilidade;
 
     // Show current image if exists
@@ -151,7 +157,7 @@ async function updateRecipe(): Promise<void> {
     const modoDePreparo = (document.getElementById('modo_de_preparo') as HTMLTextAreaElement).value.trim();
     const tempoDePreparo = (document.getElementById('tempo_de_preparo') as HTMLInputElement).value;
     const porcoes = (document.getElementById('porcoes') as HTMLInputElement).value;
-    const categoria = (document.getElementById('categoria') as HTMLInputElement).value.trim();
+    const categoria = (document.getElementById('categoria') as HTMLSelectElement).value;
     const visibilidade = (document.getElementById('visibilidade') as HTMLSelectElement).value;
     const fotoInput = document.getElementById('foto_da_receita') as HTMLInputElement;
 
@@ -253,7 +259,7 @@ function cancelRecipeEdit(): void {
 /**
  * Initialize edit recipe page
  */
-function initializeEditRecipePage(): void {
+async function initializeEditRecipePage(): Promise<void> {
     const token = localStorage.getItem('token');
 
     if (!token) {
@@ -262,7 +268,7 @@ function initializeEditRecipePage(): void {
     }
 
     // Load recipe data
-    loadRecipeData();
+    await loadRecipeData();
 
     // Set up event listeners
     const submitBtn = document.getElementById('btnSubmit');
