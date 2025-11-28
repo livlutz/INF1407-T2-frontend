@@ -90,7 +90,7 @@ function displayProfile(profile) {
     if (!content)
         return;
     // Handle profile picture URL
-    let profilePictureUrl = 'https://via.placeholder.com/150?text=Sem+Foto';
+    let profilePictureUrl = 'https://dummyimage.com/150x150/ffe0b2/232323&text=Sem+foto';
     if (profile.foto_de_perfil) {
         if (profile.foto_de_perfil.startsWith('http://') || profile.foto_de_perfil.startsWith('https://')) {
             profilePictureUrl = profile.foto_de_perfil;
@@ -107,7 +107,7 @@ function displayProfile(profile) {
                 <img src="${profilePictureUrl}"
                      alt="Foto de perfil de ${profile.username}"
                      class="perfil-picture"
-                     onerror="this.src='https://via.placeholder.com/150?text=Sem+Foto'">
+                     onerror="this.src='https://dummyimage.com/150x150/ffe0b2/232323&text=Sem+foto'">
             </div>
         </div>
         <div class="perfil-info">

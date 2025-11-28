@@ -115,7 +115,7 @@ async function displayUserRecipes(receitas: any[]): Promise<void> {
         const visibilityClass = isPublic ? 'visibility-public' : 'visibility-private';
 
         // Handle image URL - check if it's absolute or relative
-        let imageUrl = 'https://via.placeholder.com/400x300?text=Sem+Imagem';
+        let imageUrl = 'https://dummyimage.com/400x300/ffe0b2/232323&text=Sem+imagem';
         if (receita.foto_da_receita) {
             if (receita.foto_da_receita.startsWith('http://') || receita.foto_da_receita.startsWith('https://')) {
                 // Already absolute URL
@@ -140,7 +140,7 @@ async function displayUserRecipes(receitas: any[]): Promise<void> {
                 <img src="${imageUrl}"
                      alt="${receita.titulo}"
                      class="receita-img"
-                     onerror="this.src='https://via.placeholder.com/400x300?text=Sem+Imagem'">
+                     onerror="this.src='https://dummyimage.com/400x300/ffe0b2/232323&text=Sem+imagem'">
                 <h2>${receita.titulo}</h2>
                 <span class="receita-categoria">📁 ${categoriaLabel}</span>
                 <div class="receita-detalhes">

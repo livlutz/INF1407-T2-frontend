@@ -71,29 +71,30 @@ function renderReceitaDetalhes(receita) {
         // Create the main card
         const card = document.createElement('div');
         card.className = 'ver-receita-card';
-        // Add image if available
+        // Image wrapper: always add an image element. Use placeholder when none provided.
+        const imgWrap = document.createElement('div');
+        imgWrap.className = 'ver-receita-img-wrap';
+        const img = document.createElement('img');
+        img.className = 'ver-receita-img';
+        img.alt = receita.titulo;
+        const placeholder = 'https://dummyimage.com/400x300/ffe0b2/232323&text=Sem+imagem';
         if (receita.foto_da_receita) {
-            console.log('Image URL from backend:', receita.foto_da_receita);
-            const imgWrap = document.createElement('div');
-            imgWrap.className = 'ver-receita-img-wrap';
-            const img = document.createElement('img');
             // Backend now returns the full URL
             img.src = receita.foto_da_receita;
-            img.alt = receita.titulo;
-            img.className = 'ver-receita-img';
             img.onerror = function () {
                 console.error('Failed to load image:', receita.foto_da_receita);
-                this.src = 'https://via.placeholder.com/400x300?text=Sem+Imagem';
+                this.src = placeholder;
             };
-            img.onload = function () {
-                console.log('Image loaded successfully:', receita.foto_da_receita);
-            };
-            imgWrap.appendChild(img);
-            card.appendChild(imgWrap);
         }
         else {
-            console.log('No image URL provided for this recipe');
+            // No image provided — use placeholder
+            img.src = placeholder;
         }
+        img.onload = function () {
+            // optional debug
+        };
+        imgWrap.appendChild(img);
+        card.appendChild(imgWrap);
         // Content section
         const content = document.createElement('div');
         content.className = 'ver-receita-content';
