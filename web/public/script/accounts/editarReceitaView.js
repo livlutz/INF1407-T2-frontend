@@ -109,6 +109,34 @@ function populateForm(receita) {
                      onerror="this.style.display='none'; this.previousElementSibling.textContent='Imagem não disponível';">
             `;
                 currentImageDiv.style.display = 'block';
+                // Add a checkbox to allow removing the current image
+                const removeContainer = document.createElement('div');
+                removeContainer.style.marginTop = '0.5rem';
+                removeContainer.innerHTML = `
+                <label style="font-size:0.95rem; color:#ccc; display:flex; gap:0.5rem; align-items:center;">
+                    <input type="checkbox" id="removeImageCheckbox"> Remover imagem atual
+                </label>
+            `;
+                currentImageDiv.appendChild(removeContainer);
+                // Wire checkbox to disable the file input when checked
+                const chk = document.getElementById('removeImageCheckbox');
+                const fotoInputEl = document.getElementById('foto_da_receita');
+                if (chk && fotoInputEl) {
+                    chk.addEventListener('change', (e) => {
+                        try {
+                            const checked = e.target.checked;
+                            fotoInputEl.disabled = checked;
+                            if (checked) {
+                                // clear any selected file
+                                try {
+                                    fotoInputEl.value = '';
+                                }
+                                catch (err) { }
+                            }
+                        }
+                        catch (err) { }
+                    });
+                }
             }
         }
     });
@@ -163,8 +191,14 @@ function updateRecipe() {
             formData.append('porcoes', porcoes);
             formData.append('categoria', categoria);
             formData.append('visibilidade', visibilidade);
-            // Add image if selected
-            if (fotoInput.files && fotoInput.files.length > 0) {
+            // Handle image: either remove existing, upload new, or keep current
+            const removeCheckbox = document.getElementById('removeImageCheckbox');
+            const removeChecked = removeCheckbox && removeCheckbox.checked === true;
+            if (removeChecked) {
+                // Signal backend to remove current image
+                formData.append('remover_foto', '1');
+            }
+            else if (fotoInput.files && fotoInput.files.length > 0) {
                 formData.append('foto_da_receita', fotoInput.files[0]);
             }
             const response = yield fetch(backendAddress + `receitas/editar_receita/${recipeId}/`, {

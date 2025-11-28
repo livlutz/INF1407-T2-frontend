@@ -134,9 +134,32 @@ onload = () => {
                 displayFieldErrors(erro.data);
             }
 
-            // Display general error message
-            const errorMessage = erro.data?.message || erro.data?.error || 'Erro ao realizar cadastro. Tente novamente.';
-            displayMessage(errorMessage);
+            // Build clearer messages for common cases (username/email duplicates)
+            const friendlyMessages: string[] = [];
+
+            function looksLikeDuplicateMessage(msgs: any): boolean {
+                if (!Array.isArray(msgs)) return false;
+                const re = /already exists|already been taken|is already in use|already in use|unique|taken|duplicat|exists|existe|já cadastrad|já está em uso|já está|já foi registrado|já existe/i;
+                return msgs.some((m: any) => typeof m === 'string' && re.test(m));
+            }
+
+            if (erro.data) {
+                if (Array.isArray(erro.data.username) && erro.data.username.length > 0 && looksLikeDuplicateMessage(erro.data.username)) {
+                    friendlyMessages.push('Nome de usuário já está em uso. Escolha outro.');
+                }
+
+                if (Array.isArray(erro.data.email) && erro.data.email.length > 0 && looksLikeDuplicateMessage(erro.data.email)) {
+                    friendlyMessages.push('Email já cadastrado. Use outro email ou recupere sua senha.');
+                }
+
+                if (Array.isArray(erro.data.non_field_errors) && erro.data.non_field_errors.length > 0) {
+                    friendlyMessages.push(erro.data.non_field_errors.join(' '));
+                }
+            }
+
+            const fallback = erro.data?.message || erro.data?.error || 'Erro ao realizar cadastro. Tente novamente.';
+            const finalMessage = friendlyMessages.length > 0 ? friendlyMessages.join(' ') : fallback;
+            displayMessage(finalMessage);
         });
     }
 };

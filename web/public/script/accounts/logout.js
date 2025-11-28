@@ -1,7 +1,17 @@
 "use strict";
 onload = (evento) => {
-    document.getElementById('logout').addEventListener('click', (evento) => {
-        const token = localStorage.getItem('token');
+    // If there's no token, redirect to login page immediately
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = 'login.html';
+        return;
+    }
+    const logoutBtn = document.getElementById('logout');
+    if (!logoutBtn) {
+        console.warn('Logout button not found');
+        return;
+    }
+    logoutBtn.addEventListener('click', (evento) => {
         fetch(backendAddress + 'accounts/token-auth/', {
             method: 'DELETE',
             headers: {
@@ -13,7 +23,7 @@ onload = (evento) => {
             const mensagem = document.getElementById('mensagem');
             if (response.ok)
                 window.location.assign('/');
-            else
+            else if (mensagem)
                 mensagem.innerHTML = 'Erro ' + response.status;
         })
             .catch(erro => { console.log(erro); });

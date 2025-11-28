@@ -1,6 +1,18 @@
 onload = (evento) => {
-    (document.getElementById('logout') as HTMLInputElement).addEventListener('click', (evento) => {
-        const token = localStorage.getItem('token');
+    // If there's no token, redirect to login page immediately
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    const logoutBtn = document.getElementById('logout') as HTMLButtonElement | null;
+    if (!logoutBtn) {
+        console.warn('Logout button not found');
+        return;
+    }
+
+    logoutBtn.addEventListener('click', (evento) => {
         fetch(backendAddress + 'accounts/token-auth/', {
             method: 'DELETE',
             headers: {
@@ -9,9 +21,9 @@ onload = (evento) => {
             }
         })
         .then(response => {
-            const mensagem = document.getElementById('mensagem') as HTMLDivElement;
+            const mensagem = document.getElementById('mensagem') as HTMLDivElement | null;
             if(response.ok) window.location.assign('/');
-            else mensagem.innerHTML = 'Erro ' + response.status;
+            else if (mensagem) mensagem.innerHTML = 'Erro ' + response.status;
         })
         .catch(erro => { console.log(erro); })
     });

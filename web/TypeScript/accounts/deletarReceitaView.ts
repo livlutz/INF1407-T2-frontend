@@ -94,10 +94,16 @@ function displayRecipeInfo(receita: any): void {
     const recipeInfoDiv = document.getElementById('recipe-info');
     if (!recipeInfoDiv) return;
 
+    // Determine category label (backend may return categoria as object {value,label})
+    const catField: any = receita.categoria;
+    const categoriaLabel = (catField && typeof catField === 'object')
+        ? (catField.label || catField.value)
+        : (receita.categoria_label || receita.categoria);
+
     recipeInfoDiv.innerHTML = `
         <div class="recipe-details">
             <h3>${receita.titulo}</h3>
-            <p><strong>Categoria:</strong> ${receita.categoria}</p>
+            <p><strong>Categoria:</strong> ${categoriaLabel}</p>
             <p><strong>Tempo de Preparo:</strong> ${receita.tempo_de_preparo} minutos</p>
             <p><strong>Porções:</strong> ${receita.porcoes}</p>
         </div>

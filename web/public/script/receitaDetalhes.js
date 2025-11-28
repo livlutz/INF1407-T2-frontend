@@ -251,12 +251,15 @@ function showError(message) {
     const container = document.getElementById('receita-detalhes-container');
     if (!container)
         return;
+    // Render a smaller, centered error box (like login/password-change containers)
     container.innerHTML = `
-        <div class="ver-receita-card">
-            <div class="ver-receita-content">
-                <h1 class="ver-receita-title">Erro</h1>
-                <p style="color: #ffe0b2; text-align: center; margin: 2rem 0;">${message}</p>
-                <button class="modern-btn" onclick="window.location.href='index.html'">← Voltar para Homepage</button>
+        <div class="login-container">
+            <div class="password-change-container">
+                <h1>Erro</h1>
+                <p style="color: #ffe0b2; text-align: center; margin: 1.5rem 0;">${message}</p>
+                <div style="text-align:center; margin-top:1rem;">
+                    <button class="modern-btn" onclick="window.location.href='index.html'">← Voltar para Homepage</button>
+                </div>
             </div>
         </div>
     `;
